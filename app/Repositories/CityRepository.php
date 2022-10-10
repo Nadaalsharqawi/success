@@ -39,12 +39,14 @@ class CityRepository
 
           
         }
-        return $this->storeTrait($this->model, $data);
-  for($i=0;$i< count($request->name_ar);$i++ ){
-            DB::insert('insert into entity_purchases (name_ar,name_en,country_id)
+         for($i=0;$i< count($request->ar);$i++ ){
+            DB::insert('insert into cities (name_ar,name_en,country_id)
             values (?, ?,?)', [
             $request->ar[$i],$request->en[$i],$request->country_id,]);
         }
+
+        return $this->storeTrait($this->model, $data);
+    
          
     }
 

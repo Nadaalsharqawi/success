@@ -46,9 +46,9 @@
                         </div>
 
                          <div class="col-md-12">
-                            <button id="addRow" type="button" class="btn btn-info">+</button> 
+                            <button  id="addRow" type="button" class="btn btn-primary "> {{trans('admin.add-city')}}</button> 
                         </div>
-                       <!--  <div id="newRow" class="row"></div> -->
+                        <div id="newRow" class="row"></div>
                          
                         <div class="col-md-12">
                             {!! Form::submit(trans('admin.save') , ['class'=>'btn btn-primary ml-2 pull-left']) !!}
