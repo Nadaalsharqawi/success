@@ -22,12 +22,12 @@
         <nav class="iq-sidebar-menu">
             <ul class="iq-menu">
                 @if (Auth::user()->type == 'super_admin')
-                    <li>
-                        <a href="{{ route('users.index') }}" class="iq-waves-effect">
-                            <img src="{{ asset('assets/images/icons/users.svg') }}" class="images-sidebar" />
-                            <span> {{ trans('admin.users') }} </span>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{{ route('users.index') }}" class="iq-waves-effect">
+                        <img src="{{ asset('assets/images/icons/users.svg') }}" class="images-sidebar" />
+                        <span> {{ trans('admin.users') }} </span>
+                    </a>
+                </li>
                 @endif
 
                 <li>
@@ -38,67 +38,76 @@
                 </li>
 
                 @if (Auth::user()->type == 'admin' || Auth::user()->type == 'super_admin')
-                    <li>
-                        <a href="{{ route('providers.index') }}" class="iq-waves-effect">
-                            <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
-                            <span> {{ trans('admin.providers') }} </span>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{{ route('providers.index') }}" class="iq-waves-effect">
+                        <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
+                        <span> {{ trans('admin.providers') }} </span>
+                    </a>
+                </li>
                 @endif
 
                 @if (Auth::user()->type == 'admin' || Auth::user()->type == 'super_admin')
-                    <li>
-                        <a href="{{ route('countries.index') }}" class="iq-waves-effect">
-                            <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
-                            <span> {{ trans('admin.countries') }} </span>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{{ route('countries.index') }}" class="iq-waves-effect">
+                        <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
+                        <span> {{ trans('admin.countries') }} </span>
+                    </a>
+                </li>
                 @endif
 
                 @if (Auth::user()->type == 'admin' || Auth::user()->type == 'super_admin')
-                    <li>
-                        <a href="{{ route('universities.index') }}" class="iq-waves-effect">
-                            <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
-                            <span> {{ trans('admin.universities') }} </span>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{{ route('universities.index') }}" class="iq-waves-effect">
+                        <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
+                        <span> {{ trans('admin.universities') }} </span>
+                    </a>
+                </li>
                 @endif
 
                 @if (Auth::user()->type == 'admin' || Auth::user()->type == 'super_admin')
-                    <li>
-                        <a href="{{ route('services.index') }}" class="iq-waves-effect">
-                            <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
-                            <span> {{ trans('admin.services') }} </span>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{{ route('cities.index') }}" class="iq-waves-effect">
+                        <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
+                        <span> {{ trans('admin.cities') }} </span>
+                    </a>
+                </li>
+                @endif
+
+                @if (Auth::user()->type == 'admin' || Auth::user()->type == 'super_admin')
+                <li>
+                    <a href="{{ route('services.index') }}" class="iq-waves-effect">
+                        <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
+                        <span> {{ trans('admin.services') }} </span>
+                    </a>
+                </li>
                 @endif
 
 
                 @if (Auth::user()->type == 'admin' || Auth::user()->type == 'super_admin')
-                    <li>
-                        <a href="{{ route('ads.index') }}" class="iq-waves-effect">
-                            <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
-                            <span> {{ trans('admin.ads') }} </span>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{{ route('ads.index') }}" class="iq-waves-effect">
+                        <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
+                        <span> {{ trans('admin.ads') }} </span>
+                    </a>
+                </li>
                 @endif
 
                 @if (Auth::user()->type == 'admin' || Auth::user()->type == 'super_admin')
-                    <li>
-                        <a href="{{ route('memberships.index') }}" class="iq-waves-effect">
-                            <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
-                            <span> {{ trans('admin.memberships') }} </span>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{{ route('memberships.index') }}" class="iq-waves-effect">
+                        <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
+                        <span> {{ trans('admin.memberships') }} </span>
+                    </a>
+                </li>
                 @endif
 
                 @if (Auth::user()->type == 'admin' || Auth::user()->type == 'super_admin')
-                    <li>
-                        <a href="{{ route('colleges.index') }}" class="iq-waves-effect">
-                            <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
-                            <span> {{ trans('admin.colleges') }} </span>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{{ route('colleges.index') }}" class="iq-waves-effect">
+                        <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
+                        <span> {{ trans('admin.colleges') }} </span>
+                    </a>
+                </li>
                 @endif
 
                 <li>

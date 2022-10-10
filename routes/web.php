@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\MembershipController;
 use App\Http\Controllers\Admin\UniversityController;
+use App\Http\Controllers\Admin\CityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,7 @@ Route::group(['middleware' => ['lang', 'auth']], function () {
     Route::resource('providers', ProviderController::class);
     Route::resource('countries', CountryController::class);
     Route::resource('universities', UniversityController::class);
+    Route::resource('cities', CityController::class);
     Route::resource('services', ServiceController::class);
     Route::resource('ads', AdsController::class);
     Route::resource('settings', SettingController::class);
