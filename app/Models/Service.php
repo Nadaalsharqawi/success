@@ -19,6 +19,11 @@ class Service extends Model
         return $this->belongsToMany(Country::class, 'service_countries');
     }
 
+     public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'service_countries');
+    }
+
     public function ads(): BelongsToMany
     {
         return $this->belongsToMany(Ads::class, 'service_ads');
