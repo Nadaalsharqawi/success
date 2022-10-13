@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ServiceController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,5 +30,5 @@ Route::group(['middleware' => 'api'], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/profile', [AuthController::class, 'userProfile']);  
-    Route::resource('/products', ProductController::class);  
+    Route::resource('/services', ServiceController::class);  
 });
