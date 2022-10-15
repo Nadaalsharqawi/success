@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ServiceController;
+use App\Http\Controllers\Api\ProviderController;
+
 
 
 /*
@@ -31,4 +33,46 @@ Route::group(['middleware' => 'api'], function () {
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/profile', [AuthController::class, 'userProfile']);  
     Route::resource('/services', ServiceController::class);  
+});
+
+Route::group(['prefix' => 'admin','middleware' => ['assign.guard:providerServices','jwt.auth']],function ()
+{
+	Route::get('/providers','ProviderController@demo');	
+	 Route::post('/register', [ProviderController::class, 'register']);
+});
+
+
+
+Route::prefix('products')->controller(ProductController::class)->group(function () {
+    Route::middleware('auth:admin_api')->group(function () {
+        Route::post('/', 'store');
+        Route::post('update/{id}', 'update');
+        Route::delete('/{id}', 'delete');
+    });
+
+    Route::middleware('auth:customer_api')->group(function () {
+        Route::get('/', 'getAllProduct');
+        Route::get('/{id}', 'show');
+    });
+});
+
+
+Route::prefix('admin')->controller(AuthController::class)->group(function () {
+
+    Route::post('login', 'login');
+    Route::post('register', 'register');
+    Route::middleware('auth:admin_api')->group(function () {
+        Route::post('logout', 'logout');
+        Route::post('me', 'me');
+    });
+});
+
+Route::prefix('provider')->controller(ProviderController::class)->group(function () {
+
+    Route::post('login', 'login');
+    Route::post('register', 'register');
+    Route::middleware('auth:admin_api')->group(function () {
+        Route::post('logout', 'logout');
+        Route::post('me', 'me');
+    });
 });

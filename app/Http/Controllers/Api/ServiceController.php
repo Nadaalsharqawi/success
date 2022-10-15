@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Middleware\AssignGuard ;
 use Validator;
 use App\Helpers\FileHelper;
 use App\Models\Service;
@@ -18,7 +19,9 @@ class ServiceController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api');
+
+        $this->middleware('assign.guard');
+        // $this->middleware('auth:users');
     }
 
     /**

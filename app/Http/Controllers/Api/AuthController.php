@@ -18,7 +18,7 @@ class AuthController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:user_api', ['except' => ['login', 'register']]);
     }
 
     /**
@@ -40,7 +40,7 @@ class AuthController extends Controller
             ], 422);
         }
 
-        if (! $token = auth('api')->attempt($validator->validated())) {
+        if (! $token = auth('user_api')->attempt($validator->validated())) {
             return response()->json([
                 'status' => false,
                 'message' => 'Invalid Credentials',
@@ -75,18 +75,13 @@ class AuthController extends Controller
 
         $user = new User();
         $user->name = $request->name;
-        $user->email = $request->email;
         $user->phone = $request->phone;
+        $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->type = $request->type;
         $user->country_id = $request->countryId;
-        $user->service_id = $request->serviceId;
         $user->image = FileHelper::upload_file('admins', $request->image);
-        $user->address = $request->address;
-        $user->facebook = $request->facebook;
-        $user->instagram = $request->instagram;
-        $user->whatsapp = $request->whatsapp;
-        $user->snap_chat = $request->snap_chat;
+       
 
 
         $user->save();
@@ -105,7 +100,7 @@ class AuthController extends Controller
     public function logout(Request $request) 
     {
         try {
-            auth('api')->logout();
+            auth('user_api')->logout();
             return response()->json([
                 'status' => true,
                 'message' => 'Successfully logged out'
@@ -127,7 +122,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'User found',
-            'data' => auth('api')->user()
+            'data' => auth('user_api')->user()
         ], 200);
     }
 
@@ -137,7 +132,7 @@ class AuthController extends Controller
      */
     public function refresh(Request $request) 
     {
-        return $this->respondWithToken(auth('api')->refresh());
+        return $this->respondWithToken(auth('user_api')->refresh());
     }
 
     /**
@@ -147,7 +142,7 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-        $minutes = auth('api')->factory()->getTTL() * 60;
+        $minutes = auth('user_api')->factory()->getTTL() * 60;
         $timestamp = now()->addMinute($minutes);
         $expires_at = date('M d, Y H:i A', strtotime($timestamp));
         return response()->json([
