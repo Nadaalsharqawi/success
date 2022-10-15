@@ -5,7 +5,7 @@
                 <div class="iq-header-title">
                     <h4 class="card-title">
                         @if(isset($data))
-                        {{trans('admin.edit-citty')}}
+                        {{trans('admin.edit-city')}}
                         @else
                         {{trans('admin.add-city')}}
                         @endif
@@ -61,3 +61,36 @@
         </div>
     </div>
 </div>
+@section('script')
+ <script type="text/javascript">
+        // add row
+        $(document).ready(function() {
+            $("#addRow").click(function () {
+                var html = '';
+                html += '<div class="form-group col-md-6">';
+                html +=' {!! Form::label('ar[]' , trans('admin.name_ar')) !!}';
+                html += '<span class="asters">*</span>';
+                html +=  '{!! Form::text('ar[]' , $data->name_ar ?? old('ar[]') ,['class'=>'form-control' , 'id'=>'name_ar' , 'placeholder'=>trans('admin.name_ar')]) !!}';
+                html += '</div>';
+               
+
+                html += ' <div class="form-group col-md-6">';
+                html += ' {!! Form::label('en[]' , trans('admin.name_en')) !!}';
+                html += '<span class="asters">*</span>';
+
+                 html += '{!! Form::text('en[]' , $data->name_en ?? old('en[]') ,['class'=>'form-control' , 'id'=>'name_en' , 'placeholder'=>trans('admin.name_en')]) !!}';
+                html += '</div>';
+                
+
+
+                
+
+                $('#newRow').append(html);
+            });
+
+        } );
+        // remove row
+
+    </script>
+
+@endsection

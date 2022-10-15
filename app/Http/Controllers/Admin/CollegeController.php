@@ -35,8 +35,8 @@ class CollegeController extends Controller
      */
     public function create()
     {
-        $universities = University::all()->pluck('name', 'id');
-        return view('admin.colleges.insert',compact('universities'));
+        $university = University::all()->pluck('name', 'id');
+        return view('admin.colleges.insert',compact('university'));
     }
 
     /**
@@ -58,9 +58,9 @@ class CollegeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(College $country)
+    public function show(College $college)
     {
-        $data = $this->Service->show($country->id);
+        $data = $this->Service->show($college->id);
         return view('admin.colleges.show' , compact('data'));
     }
 
@@ -73,8 +73,8 @@ class CollegeController extends Controller
     public function edit(College $college)
     {
         $data = $this->Service->show($college->id);
-        $universities = University::all()->pluck('name', 'id');
-        return view('admin.colleges.edit' , compact('data','universities'));
+        $university = University::all()->pluck('name', 'id');
+        return view('admin.colleges.edit' , compact('data','university'));
     }
 
     /**

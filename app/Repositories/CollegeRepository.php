@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Helpers\FileHelper;
 use App\Http\Traits\CrudTrait;
 use App\Http\Traits\MainTrait;
 use App\Http\Traits\ResponseTraits;
@@ -30,7 +31,11 @@ class CollegeRepository
 
     public function store($request)
     {
-        $data = $request->except('_method', '_token');
+        $data = $request->except('_method', '_token', 'logo');
+        if ($request->hasFile('logo')) {
+            $image_path = FileHelper::upload_file('countries', $request->logo);
+            $data['logo'] = $image_path;
+        }
         return $this->storeTrait($this->model, $data);
     }
 

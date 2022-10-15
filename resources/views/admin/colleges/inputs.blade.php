@@ -38,12 +38,13 @@
                         <div class="form-group col-md-6">
                             {!! Form::label('university_id', trans('admin.university')) !!}
                             <span class="asters">*</span>
-                            {!! Form::select('university_id', $universities, old('university_id') ?? $data->colleges, [
-                                'class' => 'form-control',
-                                'id' => 'university_id',
-                                'placeholder' => trans('admin.university'),
+                            {!! Form::select('university_id', $university , $data->university ?? old('university_id'), [
+                            'class' => 'form-control',
+                            'id' => 'university_id',
+                            'placeholder' => trans('admin.university'),
                             ]) !!}
                         </div>
+
                         <div class="col-md-12">
                             {!! Form::submit(trans('admin.save') , ['class'=>'btn btn-primary ml-2 pull-left']) !!}
                             {!! Form::reset(trans('admin.cancel') , ['class'=>'btn btn-secondary pull-left']) !!}
