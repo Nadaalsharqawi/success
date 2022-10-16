@@ -20,7 +20,7 @@ class ServiceController extends Controller
      */
     public function __construct() {
 
-        $this->middleware('assign.guard');
+       // $this->middleware('assign.guard');
         // $this->middleware('auth:users');
     }
 
@@ -55,12 +55,6 @@ class ServiceController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,jpg,png,gif',
         ]);
 
-        
-         $service = new Service();
-         $service->name = $request->name;
-         $service->logo = FileHelper::upload_file('admins', $request->logo);
-         $service->countries()->attach($request->countryId);
-         $service->save();
 
         if ($validator->fails()) {
             return response()->json([
@@ -69,7 +63,12 @@ class ServiceController extends Controller
                 'error' => $validator->errors()
             ]);
         }
-
+          
+         $service = new Service();
+         $service->name = $request->name;
+         $service->logo = FileHelper::upload_file('admins', $request->logo);
+         $service->countries()->attach($request->countryId);
+         $service->save();
         
         return response()->json([
             "status" => true,
@@ -113,7 +112,7 @@ class ServiceController extends Controller
     {
         
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|string',
             'countryId' => 'exists:countries,id',
             'logo' => 'nullable|image|mimes:jpeg,jpg,png,gif',
         ]);

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Middleware;
-
 use Closure;
 use Auth ;
 
@@ -14,13 +13,15 @@ class AssignGuard
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+     public function handle( $request, Closure $next )
     {
-     if (Auth::guard('user_api')->check())
-        return $next($request);
+        if (Auth::guard('user_api')->check()) {
 
-    elseif(Auth::guard('provider_api')->check())
-        return $next($request);
+             return $next($request);
+        }
+       
+
+   
     
-}
+    }
 }
