@@ -319,5 +319,7 @@ return [
     'fac' => 'Facebook',
     'ins' => 'Instagram',
     'snap' => 'Snap Chat',
+    'expertise' => 'expertise',
+    'pages_number' => 'pages_number' ,
 ];
 

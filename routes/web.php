@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\MembershipController;
 use App\Http\Controllers\Admin\UniversityController;
 use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,7 @@ Route::group(['middleware' => ['lang', 'auth']], function () {
     Route::resource('ads', AdsController::class);
     Route::resource('settings', SettingController::class);
     Route::resource('colleges', CollegeController::class);
+     Route::resource('products', ProductController::class);
     Route::get('settings/change_lang/{lang}', [SettingController::class, 'changeLang'])->name('settings.changelang');
     Route::resource('memberships', MembershipController::class);
     Route::post('discounts', [MembershipController::class,'discount'])->name('memberships.discounts');

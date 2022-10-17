@@ -39,7 +39,7 @@
                                 <td>{{$item->name}}</td>
                                 <td>
                                     @if ($item->logo != null)
-                                        <img src="{{ asset('storage/' . $item->logo) }}"
+                                        <img src="{{ Storage::url('/' . $item->logo) }}"
                                             style="width:40px;height:40px;" />
                                     @else
                                         <img src="{{ asset('assets/imgs/avatar.png') }}"

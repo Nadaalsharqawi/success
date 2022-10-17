@@ -50,12 +50,13 @@ class ProductController extends Controller
     {
 
     	$validator = Validator::make($request->all(), [
-    		'name' => 'required|string',
-    		'expertiseId' => 'exists:expertises,id',
-    		'logo' => 'nullable|image|mimes:jpeg,jpg,png,gif',
+    		'name_ar' => 'required|string',
+    		'name_en' => 'required|string',
+    		'expertise_id' => 'sometimes|exists:expertises,id',
+    		'image' => 'nullable|image|mimes:jpeg,jpg,png,gif',
     		 'status' => 'in:new,utilizes',
     		 'delivery_date' => 'required|date',
-    		 'description' => 'string' ,'price' => 'required|integer|min:0',
+    		 'description' => 'string' ,
     		 'price' => 'required|integer|min:0',
     	]);
 
@@ -69,7 +70,8 @@ class ProductController extends Controller
 
 
     	$product = new Product();
-    	$product->name = $request->name;
+    	$product->name_ar = $request->name_ar;
+    	$product->name_en = $request->name_en;
     	$product->pages_number = $request->pages_number;
     	$product->description = $request->description;
     	$product->price = $request->price;
@@ -125,12 +127,13 @@ class ProductController extends Controller
     {
 
     	$validator = Validator::make($request->all(), [
-    		'name' => 'required|string',
-    		'expertiseId' => 'exists:expertises,id',
-    		'logo' => 'nullable|image|mimes:jpeg,jpg,png,gif',
+    		'name_ar' => 'required|string',
+    		'name_en' => 'required|string',
+    		'expertise_id' => 'sometimes|exists:expertises,id',
+    		'image' => 'nullable|image|mimes:jpeg,jpg,png,gif',
     		 'status' => 'in:new,utilizes',
     		 'delivery_date' => 'required|date',
-    		 'description' => 'string' ,'price' => 'required|integer|min:0',
+    		 'description' => 'string' ,
     		 'price' => 'required|integer|min:0',
     	]);
 
@@ -143,7 +146,8 @@ class ProductController extends Controller
     	}
 
     	
-    	$product->name = $request->name;
+    	$product->name_ar = $request->name_ar;
+    	$product->name_en = $request->name_en;
     	$product->pages_number = $request->pages_number;
     	$product->description = $request->description;
     	$product->price = $request->price;

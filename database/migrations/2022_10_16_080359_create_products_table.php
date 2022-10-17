@@ -16,8 +16,8 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
            $table->id();
-           $table->string('name')->nullable();
-          // $table->string('name_en')->nullable();
+           $table->string('name_ar')->nullable();
+           $table->string('name_en')->nullable();
            $table->foreignIdFor(Expertise::class);
            $table->enum('status', ['new' , 'utilizes'])->default('new')->nullable();
            $table->text('image')->nullable();

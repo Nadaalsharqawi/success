@@ -9,7 +9,7 @@ use App\Http\Traits\ResponseTraits;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
-class CityRepository
+class ProductRepository
 {
     use CrudTrait, ResponseTraits, MainTrait;
 
@@ -32,17 +32,12 @@ class CityRepository
 
     public function store($request)
     {
-        $data = $request->except('_method', '_token', 'logo');
-        if ($request->hasFile('logo')) {
-            $image_path = FileHelper::upload_file('cities', $request->logo);
-            $data['logo'] = $image_path;
+        $data = $request->except('_method', '_token', 'image');
+        if ($request->hasFile('image')) {
+            $image_path = FileHelper::upload_file('products', $request->image);
+            $data['image'] = $image_path;
 
           
-        }
-         for($i=0;$i< count($request->ar);$i++ ){
-            DB::insert('insert into cities (name_ar,name_en,country_id)
-            values (?, ?,?)', [
-            $request->ar[$i],$request->en[$i],$request->country_id,]);
         }
 
         return $this->storeTrait($this->model, $data);
@@ -55,7 +50,7 @@ class CityRepository
         $data = $request->except('_method', '_token', 'logo');
         $country = $this->model->where('id', $id)->first();
         if ($request->hasFile('logo')) {
-            $image_path = FileHelper::update_file('countries', $request->logo, $country->image);
+            $image_path = FileHelper::update_file('products', $request->logo, $country->image);
             $data['logo'] = $image_path;
         }
         return $this->updateTrait($this->model, $id, $data);

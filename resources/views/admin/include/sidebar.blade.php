@@ -110,6 +110,15 @@
                 </li>
                 @endif
 
+                 @if (Auth::user()->type == 'admin' || Auth::user()->type == 'super_admin')
+                <li>
+                    <a href="{{ route('products.index') }}" class="iq-waves-effect">
+                        <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
+                        <span> {{ trans('admin.products') }} </span>
+                    </a>
+                </li>
+                @endif
+
                 <li>
                     <a href="{{ route('settings.index') }}" class="iq-waves-effect">
                         <img src="{{ asset('assets/images/icons/settings.svg') }}" class="images-sidebar" />

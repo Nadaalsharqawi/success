@@ -335,4 +335,6 @@ return [
     'add-college' => 'اضافة الكلية',
     'edit-college' => 'تعديل الكلية ',
     'colleges-info' => 'بيانات الكلية ',
+    'expertise' => "الاختصاص"   ,
+    'pages_number' => 'عدد الصفحات' ,
 ];
