@@ -78,10 +78,11 @@ class AuthController extends Controller
         $user->phone = $request->phone;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-        $user->type = $request->type;
+       // $user->type = $request->type;
         $user->country_id = $request->countryId;
+        if($user->image){
         $user->image = FileHelper::upload_file('admins', $request->image);
-       
+       }
 
 
         $user->save();
