@@ -13,15 +13,12 @@ class AssignGuard
      * @param  \Closure  $next
      * @return mixed
      */
-     public function handle( $request, Closure $next )
+    public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard('user_api')->check()) {
-
-             return $next($request);
+        if ((Auth::guard('user_api')->check()) or (Auth::guard('provider_api')->check())) {
+           return $next($request);
         }
-       
 
-   
-    
+      return redirect('/');
     }
 }

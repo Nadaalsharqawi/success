@@ -39,7 +39,8 @@ Route::group(['middleware' => 'api'], function () {
     Route::resource('/services', ServiceController::class);  
     Route::resource('/products', ProductController::class);  
     Route::resource('/providers', ProviderController::class);  
-    Route::resource('/countries', CountryController::class);  
+    Route::resource('/countries', CountryController::class); 
+    Route::get('/provider/services/{id}', [ProviderController::class ,'providerServices']);   
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['assign.guard:providerServices','jwt.auth']],function ()
@@ -68,3 +69,7 @@ Route::get('/verified-user', function(Request $request){
 
     dd('your are verified', $request->user()->name);
 })->middleware('auth:user_api','verified');
+
+Route::get('provider/verify/{id}', [PProviderController::class,'Verify'])->name('provider.Verify'); // Make sure to keep this as your route name
+
+Route::get('provider/email/resend', [PProviderController::class, 'resend'])->name('resend');

@@ -20,7 +20,7 @@ class ServiceController extends Controller
      */
     public function __construct() {
 
-       // $this->middleware('assign.guard');
+        $this->middleware('assign.guard');
         // $this->middleware('auth:users');
     }
 
@@ -47,7 +47,7 @@ class ServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {  
         
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -69,13 +69,18 @@ class ServiceController extends Controller
          $service->logo = FileHelper::upload_file('admins', $request->logo);
          $service->countries()->attach($request->countryId);
          $service->save();
+
+          if(auth()->guard('provider_api')){
+            $provider =auth()->guard('provider_api'); 
+             $provider->user()->services()->attach($service->id);
+        }
         
         return response()->json([
             "status" => true,
             "message" => "Service created successfully.",
             "data" => $service
         ]);
-
+          
        
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Provider;
+use App\Models\Service;
 use Validator;
 
 
@@ -121,4 +122,26 @@ class ProviderController extends Controller
         ], 201);
     }
 
+
+
+ /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function providerServices($id)
+    {
+        $provider = Provider::find($id);
+        if($provider) {
+
+             $providers= $provider->services()->get();
+
+        return response()->json([
+            "status" => true,
+            "message" => "Provider List",
+            "data" => $providers
+        ]);
+        }
+       
+    }
 }
