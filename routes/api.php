@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\ProviderController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\CountryController;
+use App\Http\Controllers\Api\VerificationController;
 
 
 
@@ -36,6 +38,8 @@ Route::group(['middleware' => 'api'], function () {
     Route::get('/profile', [AuthController::class, 'userProfile']);  
     Route::resource('/services', ServiceController::class);  
     Route::resource('/products', ProductController::class);  
+    Route::resource('/providers', ProviderController::class);  
+    Route::resource('/countries', CountryController::class);  
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['assign.guard:providerServices','jwt.auth']],function ()
@@ -55,3 +59,12 @@ Route::prefix('provider')->controller(ProviderController::class)->group(function
         Route::post('me', 'me');
     });
 });
+
+Route::get('email/verify/{id}', [VerificationController::class,'verify'])->name('verification.verify'); // Make sure to keep this as your route name
+
+Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
+
+Route::get('/verified-user', function(Request $request){
+
+    dd('your are verified', $request->user()->name);
+})->middleware('auth:user_api','verified');

@@ -31,10 +31,10 @@ return new class extends Migration
             $table->string('lang')->default('ar');
             $table->text('image')->nullable();
             $table->text('address')->nullable();
-            $table->text('facebook')->nullable()->unique();
-            $table->text('instagram')->nullable()->unique();
-            $table->text('whatsapp')->nullable()->unique();
-            $table->text('snap_chat')->nullable()->unique();
+            $table->text('facebook')->nullable();
+            $table->text('instagram')->nullable();
+            $table->text('whatsapp')->nullable();
+            $table->text('snap_chat')->nullable();
             $table->longText('fac')->nullable();
             $table->longText('ins')->nullable();
             $table->longText('snap')->nullable();

@@ -11,6 +11,22 @@ use Validator;
 class ProviderController extends Controller
 {
 
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $providers = Provider::all();
+        
+        return response()->json([
+            "status" => true,
+            "message" => "Provider List",
+            "data" => $providers
+        ]);
+    }
+
  public function login()
  {
     $credentials = request(['phone', 'password']);
@@ -63,6 +79,8 @@ class ProviderController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
+             'status' => true,
+            'message' => 'Login successful',
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->guard('provider_api')->factory()->getTTL() * 60

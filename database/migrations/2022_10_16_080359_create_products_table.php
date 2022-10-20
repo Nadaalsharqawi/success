@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Expertise;
+use App\Models\Provider;
 
 return new class extends Migration
 {
@@ -19,6 +20,7 @@ return new class extends Migration
            $table->string('name_ar')->nullable();
            $table->string('name_en')->nullable();
            $table->foreignIdFor(Expertise::class);
+           $table->foreignIdFor(Provider::class);
            $table->enum('status', ['new' , 'utilizes'])->default('new')->nullable();
            $table->text('image')->nullable();
            $table->integer('pages_number')->nullable();

@@ -80,6 +80,7 @@ class ProductController extends Controller
     	$product->status = $request->status;
     	$product->image = FileHelper::upload_file('admins', $request->image);
     	$product->expertise_id= $request->expertiseId;
+        $product->provider_id = Auth::guard('provider_api')->user() ;
     	$product->save();
 
     	

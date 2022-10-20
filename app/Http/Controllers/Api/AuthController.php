@@ -79,18 +79,20 @@ class AuthController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
        // $user->type = $request->type;
+       
         $user->country_id = $request->countryId;
         if($user->image){
         $user->image = FileHelper::upload_file('admins', $request->image);
        }
 
-
+         
         $user->save();
-
+        $token = $user->createToken('Laravel Password Grant Client')->plainTextToken;
         return response()->json([
             'status' => true,
             'message' => 'User successfully registered',
-            'user' => $user
+            'user' => $user ,
+            'access_token'=> $token
         ], 201);
     }
 

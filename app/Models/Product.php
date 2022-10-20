@@ -32,6 +32,11 @@ class Product extends Model
         return $this->belongsTo(Expertise::class);
     }
 
+     public function provider(): BelongsToMany
+    {
+        return $this->belongsToMany(Provider::class, 'providers');
+    }
+
 
 
 
