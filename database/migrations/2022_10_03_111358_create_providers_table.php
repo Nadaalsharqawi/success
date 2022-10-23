@@ -23,7 +23,7 @@ return new class extends Migration
             $table->boolean('show_phone')->default(0);
             $table->boolean('show_whatsapp')->default(0);
             $table->string('password')->nullable();
-            $table->enum('type', ['provider', 'user'])->default('provider')->nullable();
+            $table->enum('type', ['شخص', 'جهة'])->default('جهة')->nullable();
             $table->foreignId('country_id')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('service_id')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('membership_id')->nullable()->constrained('memberships')->onDelete('cascade')->onUpdate('cascade');

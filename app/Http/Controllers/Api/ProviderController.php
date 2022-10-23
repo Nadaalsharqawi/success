@@ -100,7 +100,7 @@ class ProviderController extends Controller
             'facebook' =>  'string',
             'instagram' => 'string',
             'snap_chat' => 'string',
-            'type' => 'in:provider, user',
+            'type' => 'in:شخص,جهة',
             'countryId' => 'exists:countries,id',
             'serviceId' => 'exists:services,id',
             'image' => 'nullable',
