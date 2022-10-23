@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\ProviderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CountryController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VerificationController;
 use App\Http\Controllers\Api\VerificationProviderController;
 
@@ -41,6 +42,7 @@ Route::group(['middleware' => 'api'], function () {
     Route::resource('/products', ProductController::class);  
     Route::resource('/providers', ProviderController::class);  
     Route::resource('/countries', CountryController::class); 
+    Route::resource('/users', UserController::class); 
     Route::get('/provider/services/{id}', [ProviderController::class ,'providerServices']);   
 });
 

@@ -17,8 +17,8 @@ class ProviderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+     public function index()
+     {
         $providers = Provider::all();
         
         return response()->json([
@@ -28,15 +28,15 @@ class ProviderController extends Controller
         ]);
     }
 
- public function login()
- {
-    $credentials = request(['phone', 'password']);
-    if (!$token = auth()->guard('provider_api')->attempt($credentials)) {
-        return response()->json(['error' => 'Unauthorized'], 401);
-    }
+    public function login()
+    {
+        $credentials = request(['phone', 'password']);
+        if (!$token = auth()->guard('provider_api')->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
 
-    return $this->respondWithToken($token);
-}
+        return $this->respondWithToken($token);
+    }
 
     /**
      * Get the authenticated User.
@@ -80,12 +80,12 @@ class ProviderController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
-             'status' => true,
-            'message' => 'Login successful',
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->guard('provider_api')->factory()->getTTL() * 60
-        ]);
+           'status' => true,
+           'message' => 'Login successful',
+           'access_token' => $token,
+           'token_type' => 'bearer',
+           'expires_in' => auth()->guard('provider_api')->factory()->getTTL() * 60
+       ]);
     }
 
     public function register(Request $request)
@@ -94,7 +94,7 @@ class ProviderController extends Controller
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:providers',
             'phone' => 'required|string|min:8|unique:providers',
-             'password' => 'required|string|confirmed|min:8',
+            'password' => 'required|string|confirmed|min:8',
             'whatsapp' => 'required|string|min:8|unique:providers',
             'address' => 'string',
             'facebook' =>  'string',
@@ -103,7 +103,7 @@ class ProviderController extends Controller
             'type' => 'in:provider, user',
             'countryId' => 'exists:countries,id',
             'serviceId' => 'exists:services,id',
-            'image' => 'nullable|image|mimes:jpeg,jpg,png,gif',
+            'image' => 'nullable',
 
         ]);
 
@@ -130,19 +130,19 @@ class ProviderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function providerServices($id)
-    {
-        $provider = Provider::find($id);
-        if($provider) {
+ public function providerServices($id)
+ {
+    $provider = Provider::find($id);
+    if($provider) {
 
-             $providers= $provider->services()->get();
+       $providers= $provider->services()->get();
 
-        return response()->json([
-            "status" => true,
-            "message" => "Provider List",
-            "data" => $providers
-        ]);
-        }
-       
-    }
+       return response()->json([
+        "status" => true,
+        "message" => "Provider List",
+        "data" => $providers
+    ]);
+   }
+   
+}
 }
