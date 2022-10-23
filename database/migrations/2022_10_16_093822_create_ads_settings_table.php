@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ads', function (Blueprint $table) {
+        Schema::create('ads_settings', function (Blueprint $table) {
             $table->id();
-            $table->longText('body');
-            $table->longText('image');
-            $table->integer('date_publication')->nullable();
-            $table->date('date_expiry')->nullable();
+            $table->foreignId('country_id')->nullable()->constrained('countries')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('duration_status');
+            $table->string('date_publication')->nullable();
+            $table->date('duration')->nullable();
+            $table->decimal('price');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ads');
+        Schema::dropIfExists('ads_settings');
     }
 };

@@ -92,6 +92,15 @@
                 </li>
                 @endif
 
+                 {{-- @if (Auth::user()->type == 'admin' || Auth::user()->type == 'super_admin')
+                <li>
+                    <a href="{{ route('ads-Setting.index') }}" class="iq-waves-effect">
+                        <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
+                        <span> {{ trans('admin.ads-setting') }} </span>
+                    </a>
+                </li>
+                @endif --}}
+
                 @if (Auth::user()->type == 'admin' || Auth::user()->type == 'super_admin')
                 <li>
                     <a href="{{ route('memberships.index') }}" class="iq-waves-effect">

@@ -295,6 +295,7 @@ return [
     'whatsapp' =>'whatsapp',
     "I Can't" => "I Can't",
     'ads' => 'ads',
+    'ads-setting' => 'Ad Setting',
     'body' => 'body',
     'add-ads' => 'add ads',
     'edit-ads' => 'edit ads',

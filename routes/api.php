@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\ProviderController;
-
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\AdsController;
+use App\Http\Controllers\Api\MemebershipController;
 
 
 /*
@@ -28,11 +30,18 @@ Route::group(['middleware' => 'api'], function () {
     Route::group(['prefix' => 'auth'], function () {
         Route::post('/login', [AuthController::class, 'login']);
         Route::post('/register', [AuthController::class, 'register']);
+        Route::get('/showProviders', [ UserController::class,'showProviders']);
+        
+
+
+       
     });
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/profile', [AuthController::class, 'userProfile']);  
-    Route::resource('/services', ServiceController::class);  
+    // Route::resource('/services', ServiceController::class);   
+     
+
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['assign.guard:providerServices','jwt.auth']],function ()
@@ -40,6 +49,7 @@ Route::group(['prefix' => 'admin','middleware' => ['assign.guard:providerService
 	Route::get('/providers','ProviderController@demo');	
 	 Route::post('/register', [ProviderController::class, 'register']);
 });
+
 
 
 
@@ -53,9 +63,20 @@ Route::prefix('products')->controller(ProductController::class)->group(function 
     Route::middleware('auth:customer_api')->group(function () {
         Route::get('/', 'getAllProduct');
         Route::get('/{id}', 'show');
+        
     });
 });
 
+Route::prefix('provider')->controller(AdsController::class)->group(function () {
+    Route::get('/showAds','showAds');
+    Route::get('/showOffer','showOffer');
+    Route::post('/createAds','createAds');
+});
+
+Route::prefix('provider')->controller(MemebershipController::class)->group(function () {
+ Route::get('/showMembership', 'showMembership');
+ Route::get('/providerMembership/{id}', 'providerMembership');
+ });
 
 Route::prefix('admin')->controller(AuthController::class)->group(function () {
 

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdsController;
+use App\Http\Controllers\Admin\AdsSettingController;
 use App\Http\Controllers\Admin\CollegeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CountryController;
@@ -45,6 +46,7 @@ Route::group(['middleware' => ['lang', 'auth']], function () {
     Route::resource('cities', CityController::class);
     Route::resource('services', ServiceController::class);
     Route::resource('ads', AdsController::class);
+    Route::resource('ads-Setting', AdsSettingController::class);
     Route::resource('settings', SettingController::class);
     Route::resource('colleges', CollegeController::class);
     Route::get('settings/change_lang/{lang}', [SettingController::class, 'changeLang'])->name('settings.changelang');

@@ -88,9 +88,19 @@ class ProviderController extends Controller
 
         ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
-        }
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors()->toJson(), 400);
+        // }
+
+        
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid Inputs',
+                    'error' => $validator->errors()
+                ], 400);
+            }
+
 
         $user = Provider::create(array_merge(
             $validator->validated(),

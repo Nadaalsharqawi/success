@@ -46,4 +46,9 @@ class Membership extends Model
     {
         return $this->hasMany(MembershipDiscounts::class);
     }
+
+      public function providers()
+    {
+        return $this->hasMany(Provider::class);
+    }
 }

@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ads', function (Blueprint $table) {
-            $table->id();
-            $table->longText('body');
-            $table->longText('image');
-            $table->integer('date_publication')->nullable();
-            $table->date('date_expiry')->nullable();
-            $table->timestamps();
+        Schema::table('ads', function (Blueprint $table) {
+            //
+             $table->enum('type', ['ad','panel','offer'])->default('ad')->nullable();
+            $table->foreignId('provider_id')->constrained('providers')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -30,6 +27,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ads');
+        Schema::table('ads', function (Blueprint $table) {
+            //
+            $table->dropColumn('type');
+        });
     }
 };

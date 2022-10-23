@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Helpers\FileHelper;
 use Validator;
 use App\Models\User;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 class AuthController extends Controller
 {
@@ -78,19 +80,26 @@ class AuthController extends Controller
         $user->phone = $request->phone;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-        $user->type = $request->type;
+        // $user->type = $request->type;
         $user->country_id = $request->countryId;
+        if($user->image){
         $user->image = FileHelper::upload_file('admins', $request->image);
-       
+        }
 
 
         $user->save();
-
-        return response()->json([
+        // if ($token = JWTAuth::attempt(['email' => $request->email, 'password' => $request->password]))
+        //         {
+             return response()->json([
             'status' => true,
             'message' => 'User successfully registered',
+            // 'token'=>$token,
             'user' => $user
-        ], 201);
+        ], 200);
+
+            //  }
+
+       
     }
 
     /**

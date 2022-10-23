@@ -182,6 +182,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        
 
 
 
@@ -214,6 +215,8 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
     'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
     'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+    'Throttle' => GrahamCampbell\Throttle\Facades\Throttle::class,
     ])->toArray(),
+    
 
 ];

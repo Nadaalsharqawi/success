@@ -10,6 +10,11 @@ use App\Http\Middleware\AssignGuard ;
 use Validator;
 use App\Helpers\FileHelper;
 use App\Models\Service;
+use App\Models\Provider;
+use Illuminate\Support\Facades\Auth;
+
+
+
 
 class ServiceController extends Controller
 {
@@ -21,7 +26,7 @@ class ServiceController extends Controller
     public function __construct() {
 
         $this->middleware('assign.guard');
-        // $this->middleware('auth:users');
+        $this->middleware('auth:users');
     }
 
     /**
@@ -155,4 +160,6 @@ class ServiceController extends Controller
             "data" => $service
         ]);
     }
+
+    
 }
