@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Middleware\AssignGuard ;
+use App\Models\User;
 use Validator;
 use App\Models\Provider;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +31,21 @@ class UserController extends Controller
         return response()->json([
             "status" => true,
             "message" => "success",
-            "data" => $country
+            "data" => $country 
+             ]);
+
+        }
+
+
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return response()->json([
+            "status" => true,
+            "message" => "User deleted successfully.",
+            "data" => $user
         ]);
-    }
+    } 
 }
+

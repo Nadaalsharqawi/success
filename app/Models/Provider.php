@@ -7,13 +7,16 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use App\Notifications\MailEmailVerificationNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 
-class Provider extends Authenticatable implements JWTSubject
+class Provider extends Authenticatable implements JWTSubject ,MustVerifyEmail
 {
-    use HasFactory;
+     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
         'name',
@@ -85,4 +88,16 @@ class Provider extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    /**
+ * Send the password reset notification.
+ * App\Notifications\MailResetPasswordNotification.php
+ *
+ * @param  string  $token
+ * @return void
+ */
+public function sendEmailVerificationNotification()
+{
+    $this->notify(new MailEmailVerificationNotification());
+}
 }

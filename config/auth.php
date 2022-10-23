@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+         'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+            'hash' => false,
+        ],
 
         'user_api' => [
             'driver' => 'jwt',
@@ -117,5 +122,9 @@ return [
     */
 
     'password_timeout' => 10800,
+    'verification' => [
+    'expire' => 525600, // One year - enter as many mintues as you would like here
+],
 
 ];
+
