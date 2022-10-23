@@ -10,6 +10,7 @@ use App\Http\Middleware\AssignGuard ;
 use Validator;
 use App\Helpers\FileHelper;
 use App\Models\Product;
+use Auth;
 
 class ProductController extends Controller
 {
@@ -19,7 +20,7 @@ class ProductController extends Controller
      * @return void
      */
     public function __construct() {
-
+        $this->middleware('auth:provider_api')->only('store');
     	//$this->middleware('assign.guard');
         // $this->middleware('auth:users');
     }
@@ -70,6 +71,7 @@ class ProductController extends Controller
 
 
     	$product = new Product();
+        $product->provider_id = Auth::guard('provider_api')->user()->id;
     	$product->name_ar = $request->name_ar;
     	$product->name_en = $request->name_en;
     	$product->pages_number = $request->pages_number;
@@ -80,7 +82,7 @@ class ProductController extends Controller
     	$product->status = $request->status;
     	$product->image = FileHelper::upload_file('admins', $request->image);
     	$product->expertise_id= $request->expertiseId;
-        $product->provider_id = Auth::guard('provider_api')->user() ;
+        $product->provider_id = Auth::guard('provider_api')->user()->id ;
     	$product->save();
 
     	
@@ -152,6 +154,7 @@ class ProductController extends Controller
     	$product->pages_number = $request->pages_number;
     	$product->description = $request->description;
     	$product->price = $request->price;
+        $product->university = $request->university;
     	$product->status = $request->status;
     	$product->delivery_date = $request->delivery_date;
     	$product->status = $request->status;

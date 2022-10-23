@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ProviderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\VerificationController;
+use App\Http\Controllers\Api\VerificationProviderController;
 
 
 
@@ -65,11 +66,10 @@ Route::get('email/verify/{id}', [VerificationController::class,'verify'])->name(
 
 Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 
-Route::get('/verified-user', function(Request $request){
+Route::get('/verified-user', [VerificationController::class,'isVerified'])->name('user.Verify')->middleware('auth:user_api','verified'); // Make sure to keep this as your route name  
 
-    dd('your are verified', $request->user()->name);
-})->middleware('auth:user_api','verified');
+Route::get('/verified-provider', [VerificationProviderController::class,'isVerified'])->name('provider.Verify')->middleware('auth:provider_api'); // Make sure to keep this as your route name  
 
-Route::get('provider/verify/{id}', [PProviderController::class,'Verify'])->name('provider.Verify'); // Make sure to keep this as your route name
+Route::get('provider/verify/{id}', [VerificationProviderController::class,'Verify'])->name('provider.Verify'); // Make sure to keep this as your route name
 
-Route::get('provider/email/resend', [PProviderController::class, 'resend'])->name('resend');
+Route::get('provider/email/resend', [VerificationProviderController::class, 'resend'])->name('resend');

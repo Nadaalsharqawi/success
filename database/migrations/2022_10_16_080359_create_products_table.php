@@ -19,8 +19,8 @@ return new class extends Migration
            $table->id();
            $table->string('name_ar')->nullable();
            $table->string('name_en')->nullable();
-           $table->foreignIdFor(Expertise::class);
-           $table->foreignIdFor(Provider::class);
+           $table->foreignIdFor(Expertise::class)->nullable()->onDelete('cascade')->onUpdate('cascade');
+           $table->foreignIdFor(Provider::class)->nullable()->onDelete('cascade')->onUpdate('cascade');
            $table->enum('status', ['new' , 'utilizes'])->default('new')->nullable();
            $table->text('image')->nullable();
            $table->integer('pages_number')->nullable();

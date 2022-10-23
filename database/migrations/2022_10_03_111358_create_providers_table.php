@@ -29,6 +29,8 @@ return new class extends Migration
             $table->foreignId('membership_id')->nullable()->constrained('memberships')->onDelete('cascade')->onUpdate('cascade');
             $table->boolean('is_active')->default(True);
             $table->string('lang')->default('ar');
+            $table->boolean('verify_phone')->default(0);
+            $table->boolean('verify_email')->default(0);
             $table->text('image')->nullable();
             $table->text('address')->nullable();
             $table->text('facebook')->nullable();
@@ -40,6 +42,7 @@ return new class extends Migration
             $table->longText('snap')->nullable();
             $table->boolean('admin_approve')->default(0);
             $table->longText('fcm_token')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

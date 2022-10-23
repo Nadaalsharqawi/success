@@ -20,7 +20,7 @@ class ServiceController extends Controller
      */
     public function __construct() {
 
-        $this->middleware('assign.guard');
+        //$this->middleware('assign.guard');
         // $this->middleware('auth:users');
     }
 
@@ -70,7 +70,7 @@ class ServiceController extends Controller
          $service->countries()->attach($request->countryId);
          $service->save();
 
-          if(auth()->guard('provider_api')){
+          if(auth()->guard('provider_api')->user()){
             $provider =auth()->guard('provider_api'); 
              $provider->user()->services()->attach($service->id);
         }

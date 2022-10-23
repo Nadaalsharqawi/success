@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Verified;
@@ -28,7 +28,7 @@ class VerificationController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -37,7 +37,7 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api')->only('resend');
+        $this->middleware('auth:user_api')->only('resend');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
@@ -58,7 +58,7 @@ class VerificationController extends Controller
         $request->user()->sendEmailVerificationNotification();
 
         if ($request->wantsJson()) {
-            return response(['message' => 'Email Sent']);
+            return response(['message' => 'Email verification link sent on your email']);
         }
 
         return back()->with('resent', true);
@@ -95,5 +95,16 @@ class VerificationController extends Controller
 
     }
 
+public function isVerified(Request $request) {
+        $user =Auth::guard('user_api')->user();
+       if ($user->hasVerifiedEmail()) {
+           dd('your are verified');
+       }
+    else  {
+        dd('your are not verified');
+
+    }
+
+       }
    
 }
