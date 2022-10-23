@@ -117,6 +117,7 @@ class ProviderController extends Controller
         ));
 
         return response()->json([
+            'status' => true,
             'message' => 'Provider successfully registered',
             'user' => $user
         ], 201);
