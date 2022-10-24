@@ -61,19 +61,19 @@ Route::group(['prefix' => 'admin','middleware' => ['assign.guard:providerService
 
 
 
-Route::prefix('products')->controller(ProductController::class)->group(function () {
-    Route::middleware('auth:admin_api')->group(function () {
-        Route::post('/', 'store');
-        Route::post('update/{id}', 'update');
-        Route::delete('/{id}', 'delete');
-    });
+// Route::prefix('products')->controller(ProductController::class)->group(function () {
+//     Route::middleware('auth:admin_api')->group(function () {
+//         Route::post('/', 'store');
+//         Route::post('update/{id}', 'update');
+//         Route::delete('/{id}', 'delete');
+//     });
 
-    Route::middleware('auth:customer_api')->group(function () {
-        Route::get('/', 'getAllProduct');
-        Route::get('/{id}', 'show');
+//     Route::middleware('auth:customer_api')->group(function () {
+//         Route::get('/', 'getAllProduct');
+//         Route::get('/{id}', 'show');
         
-    });
-});
+//     });
+// });
 
 Route::prefix('provider')->controller(AdsController::class)->group(function () {
     Route::get('/showAds','showAds');

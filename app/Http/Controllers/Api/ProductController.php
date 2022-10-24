@@ -61,11 +61,12 @@ class ProductController extends Controller
             'service_id' => 'exists:services,id',
             'image' => 'nullable|image|mimes:jpeg,jpg,png,gif',
             'status' => 'in:جديد,مستعمل',
-            'delivery_date' => 'required|date',
-            'publish_date' => 'required|date',
+            'delivery_date' => 'date',
+            'publish_date' => 'date',
             'description' => 'string' ,
-            'price' => 'required|integer|min:0',
-            'old_price' => 'required|integer|min:0',
+            'price' => 'integer|min:0',
+            'old_price' => 'integer|min:0',
+            'year' => 'digits:4' ,
         ]);
 
     	if ($validator->fails()) {
@@ -91,6 +92,7 @@ class ProductController extends Controller
         $product->publish_date = $request->publish_date;
         $product->status = $request->status;
         $product->university = $request->university;
+         $product->year = $request->year;
         $product->image = FileHelper::upload_file('admins', $request->image);
         
         $product->service_id =$request->service_id;
