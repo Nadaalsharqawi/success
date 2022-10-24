@@ -91,18 +91,20 @@ class ServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Service $service)
-    {
+    {   
+       
         if (is_null($service)) {
             return response()->json([
                 'status' => false,
                 'message' => 'Service not found'
             ]);
         }
-
+        $products = $service->products;
+        
         return response()->json([
             "success" => true,
             "message" => "Service found.",
-            "data" => $service
+            "data" => $products
         ]);
     }
 

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Expertise;
+use App\Models\Provider;
+use App\Models\Service;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,14 +29,19 @@ class Product extends Model
         }
     }
 
-  public function expertise(): BelongsTo
+     public function service(): BelongsTo
     {
-        return $this->belongsTo(Expertise::class);
+        return $this->belongsTo(Service::class ,'service_id');
     }
 
-     public function provider(): BelongsToMany
+  public function expertise(): BelongsTo
     {
-        return $this->belongsToMany(Provider::class, 'providers');
+        return $this->belongsTo(Expertise::class ,'expertise_id');
+    }
+
+     public function provider(): BelongsTo
+    {
+        return $this->belongsTo(Provider::class, 'provider_id');
     }
 
 
