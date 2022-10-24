@@ -15,22 +15,28 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
-           $table->id();
-           $table->string('name_ar')->nullable();
-           $table->string('name_en')->nullable();
-           $table->foreignIdFor(Expertise::class)->nullable()->onDelete('cascade')->onUpdate('cascade');
-           $table->foreignIdFor(Provider::class)->nullable()->onDelete('cascade')->onUpdate('cascade');
-           $table->enum('status', ['new' , 'utilizes'])->default('new')->nullable();
-           $table->text('image')->nullable();
-           $table->integer('pages_number')->nullable();
-           $table->longText('description')->nullable();
-           $table->integer('price')->nullable();
-           $table->date('delivery_date')->nullable();
-           $table->string('university')->nullable();
-           $table->softDeletes();
-           $table->timestamps();
-       });
+      Schema::create('products', function (Blueprint $table) {
+       $table->id();
+       $table->string('name_ar')->nullable();
+       $table->string('name_en')->nullable();
+       $table->foreignId('service_id')->nullable()->onDelete('cascade')->onUpdate('cascade');
+       $table->foreignId('expertise_id')->nullable()->onDelete('cascade')->onUpdate('cascade');
+       $table->foreignId('provider_id')->nullable()->onDelete('cascade')->onUpdate('cascade');
+       $table->enum('status', ['جديد' , 'مستعمل'])->default('جديد')->nullable();
+       $table->text('image')->nullable();
+       $table->string('provider_name')->nullable();
+       $table->string('service_name')->nullable();
+       $table->string('expertise_name')->nullable();
+       $table->integer('pages_number')->nullable();
+       $table->longText('description')->nullable();
+       $table->integer('price')->nullable();
+       $table->integer('old_price')->nullable();
+       $table->date('delivery_date')->nullable();
+       $table->date('publish_date')->nullable();
+       $table->string('university')->nullable();
+       $table->softDeletes();
+       $table->timestamps();
+     });
     }
 
     /**
@@ -40,6 +46,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+      Schema::dropIfExists('products');
     }
-};
+  };

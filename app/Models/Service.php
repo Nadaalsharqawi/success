@@ -38,4 +38,15 @@ class Service extends Model
     {
         return $this->hasMany(Membership::class);
     }
+
+
+     /**
+     * Get the services associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

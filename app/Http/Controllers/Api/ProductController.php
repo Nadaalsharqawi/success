@@ -10,6 +10,10 @@ use App\Http\Middleware\AssignGuard ;
 use Validator;
 use App\Helpers\FileHelper;
 use App\Models\Product;
+use App\Models\Provider;
+use App\Models\Expertise;
+use App\Models\Service;
+
 use Auth;
 
 class ProductController extends Controller
@@ -53,13 +57,16 @@ class ProductController extends Controller
     	$validator = Validator::make($request->all(), [
     		'name_ar' => 'required|string',
     		'name_en' => 'required|string',
-    		'expertise_id' => 'sometimes|exists:expertises,id',
-    		'image' => 'nullable|image|mimes:jpeg,jpg,png,gif',
-    		 'status' => 'in:new,utilizes',
-    		 'delivery_date' => 'required|date',
-    		 'description' => 'string' ,
-    		 'price' => 'required|integer|min:0',
-    	]);
+    		'expertise_id' => 'exists:expertises,id',
+            'service_id' => 'exists:services,id',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,gif',
+            'status' => 'in:جديد,مستعمل',
+            'delivery_date' => 'required|date',
+            'publish_date' => 'required|date',
+            'description' => 'string' ,
+            'price' => 'required|integer|min:0',
+            'old_price' => 'required|integer|min:0',
+        ]);
 
     	if ($validator->fails()) {
     		return response()->json([
@@ -71,28 +78,38 @@ class ProductController extends Controller
 
 
     	$product = new Product();
-        $product->provider_id = Auth::guard('provider_api')->user()->id;
-    	$product->name_ar = $request->name_ar;
-    	$product->name_en = $request->name_en;
-    	$product->pages_number = $request->pages_number;
-    	$product->description = $request->description;
-    	$product->price = $request->price;
-    	$product->status = $request->status;
-    	$product->delivery_date = $request->delivery_date;
-    	$product->status = $request->status;
-    	$product->image = FileHelper::upload_file('admins', $request->image);
-    	$product->expertise_id= $request->expertiseId;
-        $product->provider_id = Auth::guard('provider_api')->user()->id ;
-    	$product->save();
+        $provider_id = Auth::guard('provider_api')->user()->id;
+        $product->provider_name = Provider::find(Auth::guard('provider_api')->user()->id)->name;
+        $product->name_ar = $request->name_ar;
+        $product->name_en = $request->name_en;
+        $product->pages_number = $request->pages_number;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->old_price = $request->old_price;
+        $product->status = $request->status;
+        $product->delivery_date = $request->delivery_date;
+        $product->publish_date = $request->publish_date;
+        $product->status = $request->status;
+        $product->university = $request->university;
+        $product->image = FileHelper::upload_file('admins', $request->image);
+        
+        $product->service_id =$request->service_id;
+        $product->expertise_id =$request->expertise_id;
+        $product->expertise_name = Expertise::find($request->expertise_id)->name;
+        $product->service_name = Service::find($request->service_id)->name;
+        $product->expertise()->associate($request->expertise_id);
+        $product->provider()->associate($provider_id);
+        $product->service()->associate($request->service_id);
+        $product->save();
 
-    	
+        
 
 
-    	return response()->json([
-    		"status" => true,
-    		"message" => "Product created successfully.",
-    		"data" => $product
-    	]);
+        return response()->json([
+          "status" => true,
+          "message" => "Product created successfully.",
+          "data" => $product
+      ]);
 
 
     }
@@ -134,11 +151,11 @@ class ProductController extends Controller
     		'name_en' => 'required|string',
     		'expertise_id' => 'sometimes|exists:expertises,id',
     		'image' => 'nullable|image|mimes:jpeg,jpg,png,gif',
-    		 'status' => 'in:new,utilizes',
-    		 'delivery_date' => 'required|date',
-    		 'description' => 'string' ,
-    		 'price' => 'required|integer|min:0',
-    	]);
+         'status' => 'in:new,utilizes',
+         'delivery_date' => 'required|date',
+         'description' => 'string' ,
+         'price' => 'required|integer|min:0',
+     ]);
 
     	if($validator->fails()){
     		return response()->json([
@@ -155,20 +172,20 @@ class ProductController extends Controller
     	$product->description = $request->description;
     	$product->price = $request->price;
         $product->university = $request->university;
-    	$product->status = $request->status;
-    	$product->delivery_date = $request->delivery_date;
-    	$product->status = $request->status;
-    	$product->image = FileHelper::upload_file('admins', $request->image);
-    	$product->expertise_id= $request->expertiseId;
+        $product->status = $request->status;
+        $product->delivery_date = $request->delivery_date;
+        $product->status = $request->status;
+        $product->image = FileHelper::upload_file('admins', $request->image);
+        $product->expertise_id= $request->expertiseId;
 
 
-    	$product->save();
+        $product->save();
 
-    	return response()->json([
-    		"status" => true,
-    		"message" => "Product updated successfully.",
-    		"data" => $product
-    	]);
+        return response()->json([
+          "status" => true,
+          "message" => "Product updated successfully.",
+          "data" => $product
+      ]);
     }
 
     /**

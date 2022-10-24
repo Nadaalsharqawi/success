@@ -28,6 +28,9 @@ class Provider extends Authenticatable implements JWTSubject ,MustVerifyEmail
         'instagram',
         'whatsapp',
         'snap_chat',
+        'provider_id' ,
+        'servce_id' ,
+        'expertise_id' ,
     ];
       /**
      * The attributes that should be cast.
