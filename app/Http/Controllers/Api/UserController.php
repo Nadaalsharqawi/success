@@ -10,6 +10,8 @@ use App\Http\Middleware\AssignGuard ;
 use App\Models\User;
 use Validator;
 use App\Models\Provider;
+use App\Models\Ads;
+use App\Models\Service;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -47,5 +49,22 @@ class UserController extends Controller
             "data" => $user
         ]);
     } 
+
+     public function showHome(){
+           
+        $service=Service::all();
+        $ads=Ads::where('type', 'ad')->get();
+        $offers=Ads::where('type', 'offer')->get();
+        $country=Provider::where('country_id', auth()->guard('user_api')->user()->country_id)
+          ->inRandomOrder()->get(['name','image']);
+
+        return response()->json([
+            "status" => true,
+            "message" => "success",
+            "data" => $service,  $ads, $country,  $offers
+                ]);
+
+
+     }
 }
 

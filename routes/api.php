@@ -36,8 +36,7 @@ Route::group(['middleware' => 'api'], function () {
         Route::post('/login', [AuthController::class, 'login']);
         Route::post('/register', [AuthController::class, 'register']);
         Route::get('/showProviders', [ UserController::class,'showProviders']);
-        
-
+        Route::get('/showHome', [ UserController::class,'showHome']);
 
        
     });
