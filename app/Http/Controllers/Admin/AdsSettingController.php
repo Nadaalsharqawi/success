@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use App\Models\AdsSetting;
-use App\Http\Requests\StoreAdsSetting;
+use App\Http\Requests\StoreAdsSettingRequest;
 
 
 class AdsSettingController extends Controller

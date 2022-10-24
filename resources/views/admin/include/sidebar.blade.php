@@ -110,6 +110,15 @@
                 </li>
                 @endif
 
+                 @if (Auth::user()->type == 'admin' || Auth::user()->type == 'super_admin')
+                <li>
+                    <a href="{{ route('expertises.index') }}" class="iq-waves-effect">
+                        <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
+                        <span> {{ trans('admin.expertises') }} </span>
+                    </a>
+                </li>
+                @endif
+
                 @if (Auth::user()->type == 'admin' || Auth::user()->type == 'super_admin')
                 <li>
                     <a href="{{ route('colleges.index') }}" class="iq-waves-effect">

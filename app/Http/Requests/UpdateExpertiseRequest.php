@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAdsSetting extends FormRequest
+class UpdateExpertiseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +23,11 @@ class StoreAdsSetting extends FormRequest
      */
     public function rules()
     {
-        return [
-            'duration_status' => 'required',
-            // 'date_publication' => 'required_if:duration_status,',
-            // 'duration' => 'required|date|after:date_publication',
-            'country_id' => 'required|array',
-            'country_id' => 'exists:countries,id',
-        ];
+      
+         return [
+                'name_ar'=>'required|string',
+                'name_en'=>'required|string',
+            ];
+
     }
 }
