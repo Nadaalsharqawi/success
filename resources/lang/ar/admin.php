@@ -7,7 +7,7 @@ return [
     'add-user'                   => 'أضافة موظف',
     'edit-user'                  => 'تعديل الموظف',
     'user-info'                  => 'بيانات الموظف',
-    'expertises'                  => 'الخبرات',
+    'expertises'                  => 'التخصصات',
     'clients'                       => 'العملاء',
     'add-client'                    => 'أضافة عميل',
     'edit-client'                   => 'تعديل عميل',

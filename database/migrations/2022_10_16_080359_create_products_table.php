@@ -34,7 +34,7 @@ return new class extends Migration
        $table->date('delivery_date')->nullable();
        $table->date('publish_date')->nullable();
        $table->string('university')->nullable();
-       $table->year('year');   
+       $table->year('year')->nullable();   
        $table->softDeletes();
        $table->timestamps();
      });
