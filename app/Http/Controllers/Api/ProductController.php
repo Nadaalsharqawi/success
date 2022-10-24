@@ -66,7 +66,7 @@ class ProductController extends Controller
             'description' => 'string' ,
             'price' => 'integer|min:0',
             'old_price' => 'integer|min:0',
-            'year' => 'required|digits:4' ,
+            'year' => 'digits:4' ,
         ]);
 
     	if ($validator->fails()) {
