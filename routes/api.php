@@ -87,7 +87,7 @@ Route::prefix('provider')->controller(MemebershipController::class)->group(funct
  Route::get('/providerMembership/{id}', 'providerMembership');
  });
 
-Route::prefix('admin')->controller(AuthController::class)->group(function () {});
+// Route::prefix('admin')->controller(AuthController::class)->group(function () {});
 Route::prefix('provider')->controller(ProviderController::class)->group(function () {
 
     Route::post('login', 'login');
