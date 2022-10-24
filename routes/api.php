@@ -12,8 +12,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\VerificationController;
 use App\Http\Controllers\Api\VerificationProviderController;
-
-
+use App\Http\Controllers\Api\ExpertiseController;
 
 
 /*
@@ -86,6 +85,11 @@ Route::prefix('provider')->controller(MemebershipController::class)->group(funct
  Route::get('/showMembership', 'showMembership');
  Route::get('/providerMembership/{id}', 'providerMembership');
  });
+
+Route::prefix('provider')->controller(ExpertiseController::class)->group(function () {
+    Route::get('/showExpertises', 'showExpertises');
+});
+
 
 // Route::prefix('admin')->controller(AuthController::class)->group(function () {});
 Route::prefix('provider')->controller(ProviderController::class)->group(function () {
