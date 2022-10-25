@@ -61,7 +61,11 @@ class UserController extends Controller
         return response()->json([
             "status" => true,
             "message" => "success",
-            "data" => $service,  $ads, $country,  $offers
+            "data" => [
+                    "services" => $service,
+                    "ads" =>$ads,
+                    "providers"=> $country, 
+                    "offers"=> $offers ]
                 ]);
 
 
