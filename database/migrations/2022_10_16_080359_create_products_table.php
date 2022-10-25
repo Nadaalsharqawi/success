@@ -22,9 +22,11 @@ return new class extends Migration
        $table->foreignId('service_id')->nullable()->onDelete('cascade')->onUpdate('cascade');
        $table->foreignId('expertise_id')->nullable()->onDelete('cascade')->onUpdate('cascade');
        $table->foreignId('provider_id')->nullable()->onDelete('cascade')->onUpdate('cascade');
+       $table->foreignId('user_id')->nullable()->onDelete('cascade')->onUpdate('cascade');
        $table->enum('status', ['جديد' , 'مستعمل'])->default('جديد')->nullable();
        $table->text('image')->nullable();
        $table->string('provider_name')->nullable();
+       $table->string('user_name')->nullable();
        $table->string('service_name')->nullable();
        $table->string('expertise_name')->nullable();
        $table->integer('pages_number')->nullable();
