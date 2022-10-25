@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Reject;
+use Validator;
 use Auth ;
 class OrderController extends Controller
 {
@@ -19,8 +21,8 @@ class OrderController extends Controller
      */
     public function __construct() {
 
-        //$this->middleware('assign.guard');
-         //$this->middleware('auth:provider_api');
+        $this->middleware('assign.guard');
+         $this->middleware('auth:provider_api');
     }
 
     /**
@@ -106,16 +108,49 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function reject($id)
+    public function reject(Request $request , $id)
     {
-      $order = Order::find($id);
-      
-       if( $order) {
-           $order->status_order = 'rejected' ;
-       return response()->json([
+         $order = Order::find($id);
+          if( $order) {
+        $order->status_order = 'rejected' ;
+
+        $validator = Validator::make(
+            $request->all(),
+            [       'reason' => 'required',
+                    'description' => 'required|string|max:255',
+                    'order_id' => 'exists:orders,id',
+                    'provider_id' => 'exists:providers,id',
+            ]
+        );
+ 
+            
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid Inputs',
+                    'error' => $validator->errors()
+                ], 400);
+            }
+
+            $reject = new Reject();
+            $reject->reason = $request->reason;
+            $reject->description = $request->description;
+            $reject->order_id = $id;
+            $reject->provider_id = auth()->guard('provider_api')->user()->id;
+    
+            $reject->save();
+
+ 
+     
+         
+
+        return response()->json([
           "status" => true,
           "message" => "Order has been rejected",
-          "data" => $order
+          "data" => [
+            "orders"=>  $order ,
+            "reject"=> $reject
+            ]
       ]);
     }
     }
