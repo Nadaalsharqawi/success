@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Provider;
 use App\Models\Service;
+use App\Models\Ads;
+use App\Models\Order;
 use Validator;
 
 
@@ -28,15 +30,45 @@ class ProviderController extends Controller
         ]);
     }
 
-    public function login()
-    {
-        $credentials = request(['phone', 'password']);
-        if (!$token = auth()->guard('provider_api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function showProvider($id)
+     {   
+       $provider = Provider::find($id);
 
-        return $this->respondWithToken($token);
+       if (is_null($provider)) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Provider not found'
+        ]);
     }
+    $ads=Ads::where('type','ad')->where('provider_id',$id)->get();
+
+    $offers=Ads::where('type','offer')->where('provider_id', $id)->get();
+    $services= $provider->services()->get();
+    
+    return response()->json([
+        "success" => true,
+        "message" => "Provider found.",
+        "services" => $services ,
+        "offers" => $offers ,
+        "ads" => $ads ,
+    ]);
+}
+
+public function login()
+{
+    $credentials = request(['phone', 'password']);
+    if (!$token = auth()->guard('provider_api')->attempt($credentials)) {
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
+
+    return $this->respondWithToken($token);
+}
 
     /**
      * Get the authenticated User.
@@ -80,12 +112,12 @@ class ProviderController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
-           'status' => true,
-           'message' => 'Login successful',
-           'access_token' => $token,
-           'token_type' => 'bearer',
-           'expires_in' => auth()->guard('provider_api')->factory()->getTTL() * 60
-       ]);
+         'status' => true,
+         'message' => 'Login successful',
+         'access_token' => $token,
+         'token_type' => 'bearer',
+         'expires_in' => auth()->guard('provider_api')->factory()->getTTL() * 60
+     ]);
     }
 
     public function register(Request $request)
@@ -112,13 +144,13 @@ class ProviderController extends Controller
         // }
 
         
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Invalid Inputs',
-                    'error' => $validator->errors()
-                ], 400);
-            }
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid Inputs',
+                'error' => $validator->errors()
+            ], 400);
+        }
 
 
         $user = Provider::create(array_merge(
@@ -145,14 +177,17 @@ class ProviderController extends Controller
     $provider = Provider::find($id);
     if($provider) {
 
-       $providers= $provider->services()->get();
+     $services= $provider->services()->get();
 
-       return response()->json([
+     return response()->json([
         "status" => true,
         "message" => "Provider List",
-        "data" => $providers
+        "data" => $services
     ]);
-   }
-   
+ }
+ 
 }
+
+
+
 }

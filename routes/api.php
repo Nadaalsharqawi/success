@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\VerificationController;
 use App\Http\Controllers\Api\VerificationProviderController;
 use App\Http\Controllers\Api\ExpertiseController;
+use App\Http\Controllers\Api\OrderController;
 
 
 /*
@@ -48,7 +49,17 @@ Route::group(['middleware' => 'api'], function () {
     Route::resource('/providers', ProviderController::class);  
     Route::resource('/countries', CountryController::class); 
     Route::resource('/users', UserController::class); 
-    Route::get('/provider/services/{id}', [ProviderController::class ,'providerServices']);   
+    Route::resource('/orders', OrderController::class); 
+    Route::get('/provider/services/{id}', [ProviderController::class ,'providerServices']); 
+    Route::get('/show/provider/{id}', [ ProviderController::class,'showProvider']);
+    Route::post('/order/add/{id}', [OrderController::class ,'addOrder'])->name('order.add')->middleware('auth:user_api'); 
+
+    Route::post('/order/delivery/{id}', [OrderController::class ,'delivery'])->name('order.delivery'); 
+
+    Route::post('/order/reject/{id}', [OrderController::class ,'reject'])->name('order.reject'); 
+
+    Route::get('/provider/orders', [OrderController::class,'providerOrders'])->name('provider.orders')->middleware('auth:provider_api');
+
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['assign.guard:providerServices','jwt.auth']],function ()
@@ -78,6 +89,7 @@ Route::prefix('provider')->controller(AdsController::class)->group(function () {
     Route::get('/showAds','showAds');
     Route::get('/showOffer','showOffer');
     Route::post('/createAds','createAds');
+    Route::get('/adsAndOffers','adsAndOffers');
 });
 
 Route::prefix('provider')->controller(MemebershipController::class)->group(function () {
