@@ -35,4 +35,9 @@ class Order extends Model
     {
         return $this->belongsTo(Provider::class ,'user_id');
     }
+
+     public function userProvide(): BelongsTo
+    {
+        return $this->belongsTo(User::class ,'user_provide_id');
+    }
 }

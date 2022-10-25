@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name_ar');
             $table->string('name_en');
              $table->foreignId('user_id')->onDelete('cascade')->onUpdate('cascade');
+              $table->foreignId('user_provide_id')->onDelete('cascade')->onUpdate('cascade');
              $table->foreignId('provider_id')->onDelete('cascade')->onUpdate('cascade');
             $table->enum('status', ['جديد' , 'مستعمل'])->default('جديد')->nullable();
              $table->enum('status_order', ['rejected' , 'delivery' , 'wait'])->default('wait')->nullable();
