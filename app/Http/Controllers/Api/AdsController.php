@@ -20,6 +20,23 @@ class AdsController extends Controller
         $this->middleware('assign.guard');
         $this->middleware('auth:provider_api');
     }
+
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function adsAndOffers()
+     {
+        $adds = Ads::where('provider_id', auth()->guard('provider_api')->user()->id)->get();
+        
+        return response()->json([
+            "status" => true,
+            "message" => "Ads And Offers List for provider",
+            "data" => $adds
+        ]);
+    }
    
      public function showAds()
     {

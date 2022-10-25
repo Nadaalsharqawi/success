@@ -146,13 +146,15 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     protected function respondWithToken($token)
-    {
+    {   $user = auth('user_api')->user();
         $minutes = auth('user_api')->factory()->getTTL() * 60;
         $timestamp = now()->addMinute($minutes);
         $expires_at = date('M d, Y H:i A', strtotime($timestamp));
         return response()->json([
             'status' => true,
             'message' => 'Login successful',
+            'user' => $user ,
+            'type' => 'user',
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_at' => $expires_at
