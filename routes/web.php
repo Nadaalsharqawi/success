@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ExpertiseController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\RejectController;
 
 
 
@@ -57,6 +58,7 @@ Route::group(['middleware' => ['lang', 'auth']], function () {
     Route::resource('products', ProductController::class);
     Route::resource('expertises', ExpertiseController::class);
     Route::resource('orders', OrderController::class);
+     Route::resource('rejects', RejectController::class);
     Route::get('settings/change_lang/{lang}', [SettingController::class, 'changeLang'])->name('settings.changelang');
     Route::resource('memberships', MembershipController::class);
     Route::post('discounts', [MembershipController::class,'discount'])->name('memberships.discounts');

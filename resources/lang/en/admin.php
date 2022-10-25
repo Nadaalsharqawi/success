@@ -310,6 +310,7 @@ return [
     'ads' => 'ads',
     'ads-setting' => 'Ad Setting',
     'body' => 'body',
+    'rejects' => 'rejects',
     'add-ads' => 'add ads',
     'edit-ads' => 'edit ads',
     'ads-info' => 'ads information',

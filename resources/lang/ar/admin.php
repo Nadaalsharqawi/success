@@ -29,6 +29,7 @@ return [
     'price'                       => 'السعر',
     'publish_date'                       => 'موعد النشر',
     'delivery_date'                    => 'موعد الوصول',
+    'rejects'                           =>     'الرفوضات',
     'delete'                      => 'حذف',
     'show'                        => 'عرض',
     'name'                        => 'الاسم',
