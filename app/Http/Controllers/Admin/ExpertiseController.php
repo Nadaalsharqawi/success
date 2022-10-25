@@ -64,8 +64,6 @@ class ExpertiseController extends Controller
     {
         //
         
-         $data =Expertise::show($Expertise->id);
-        return view('admin.cities.show', compact('data'));
 
     }
 

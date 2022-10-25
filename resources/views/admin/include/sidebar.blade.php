@@ -82,6 +82,15 @@
                 </li>
                 @endif
 
+                  @if (Auth::user()->type == 'admin' || Auth::user()->type == 'super_admin')
+                <li>
+                    <a href="{{ route('orders.index') }}" class="iq-waves-effect">
+                        <img src="{{ asset('assets/images/icons/clients.svg') }}" class="images-sidebar" />
+                        <span> {{ trans('admin.orders') }} </span>
+                    </a>
+                </li>
+                @endif
+
 
                 @if (Auth::user()->type == 'admin' || Auth::user()->type == 'super_admin')
                 <li>

@@ -15,26 +15,26 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('name_ar')->nullable();
-            $table->string('name_en')->nullable();
-             $table->foreignId('user_id')->nullable()->onDelete('cascade')->onUpdate('cascade');
-             $table->foreignId('provider_id')->nullable()->onDelete('cascade')->onUpdate('cascade');
+            $table->string('name_ar');
+            $table->string('name_en');
+             $table->foreignId('user_id')->onDelete('cascade')->onUpdate('cascade');
+             $table->foreignId('provider_id')->onDelete('cascade')->onUpdate('cascade');
             $table->enum('status', ['جديد' , 'مستعمل'])->default('جديد')->nullable();
              $table->enum('status_order', ['rejected' , 'delivery' , 'wait'])->default('wait')->nullable();
             $table->text('image')->nullable();
-            $table->string('provider_name')->nullable();
+            $table->string('provider_name');
             $table->string('service_name')->nullable();
-            $table->string('expertise_name')->nullable();
+            $table->string('expertise_name');
             $table->integer('pages_number')->nullable();
             $table->longText('description')->nullable();
-            $table->integer('price')->nullable();
+            $table->integer('price');
             $table->integer('old_price')->nullable();
-            $table->date('delivery_date')->nullable();
-            $table->date('publish_date')->nullable();
+            $table->date('delivery_date');
+            $table->date('publish_date');
             $table->string('university')->nullable();
             $table->year('year')->nullable(); 
-            $table->string('user_name')->nullable();
-            $table->string('user_phone')->nullable();  
+            $table->string('user_name');
+            $table->string('user_phone');  
             $table->softDeletes();
             $table->timestamps();
         });

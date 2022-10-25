@@ -56,7 +56,7 @@ class OrderController extends Controller
         $order->description = $product->description;
         $order->price = $product->price;
         $order->old_price = $product->old_price;
-        $order->status = $product->status;
+        $order->status_order = $product->status;
         $order->delivery_date = $product->delivery_date;
         $order->publish_date = $product->publish_date;
         $order->status = $product->status;
