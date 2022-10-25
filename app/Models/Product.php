@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Expertise;
 use App\Models\Provider;
 use App\Models\Service;
+use App\Models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -44,6 +45,10 @@ class Product extends Model
         return $this->belongsTo(Provider::class, 'provider_id');
     }
 
+     public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
 
 

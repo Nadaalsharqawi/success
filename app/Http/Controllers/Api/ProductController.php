@@ -13,6 +13,7 @@ use App\Models\Product;
 use App\Models\Provider;
 use App\Models\Expertise;
 use App\Models\Service;
+use App\Models\User;
 
 use Auth;
 
@@ -24,9 +25,10 @@ class ProductController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:provider_api')->only('store');
-    	//$this->middleware('assign.guard');
-        // $this->middleware('auth:users');
+       // $this->middleware('auth:provider_api')->only('store');
+         //$this->middleware('auth:user_api');
+    	$this->middleware('assign.guard');
+        
     }
 
     /**
@@ -64,7 +66,7 @@ class ProductController extends Controller
             'delivery_date' => 'date',
             'publish_date' => 'date',
             'description' => 'string' ,
-            'price' => 'integer|min:0',
+            'price' => Auth::guard('provider_api')->user() ? 'required|integer|min:0' :  'integer|min:0' ,
             'old_price' => 'integer|min:0',
             'year' => 'digits:4' ,
         ]);
@@ -78,9 +80,11 @@ class ProductController extends Controller
     	}
 
 
+
+
     	$product = new Product();
-        $provider_id = Auth::guard('provider_api')->user()->id;
-        $product->provider_name = Provider::find(Auth::guard('provider_api')->user()->id)->name;
+       
+       
         $product->name_ar = $request->name_ar;
         $product->name_en = $request->name_en;
         $product->pages_number = $request->pages_number;
@@ -101,9 +105,21 @@ class ProductController extends Controller
         $product->expertise_id =$request->expertise_id;
         $product->expertise_name = Expertise::find($request->expertise_id)->name;
         $product->service_name = Service::find($request->service_id)->name;
-        $product->expertise()->associate($request->expertise_id);
-        $product->provider()->associate($provider_id);
+        $product->expertise()->associate($request->expertise_id);    
         $product->service()->associate($request->service_id);
+         if(Auth::guard('provider_api')->user())
+        {
+             $provider_id = Auth::guard('provider_api')->user()->id;
+             $product->provider()->associate($provider_id);
+              $product->provider_name = Provider::find(Auth::guard('provider_api')->user()->id)->name;
+        }
+
+         if(Auth::guard('user_api')->user())
+        {
+             $user_id = Auth::guard('user_api')->user()->id;
+             $product->user()->associate($user_id);
+             $product->user_name = User::find(Auth::guard('user_api')->user()->id)->name;
+        }
         $product->save();
 
         
