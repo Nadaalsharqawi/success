@@ -97,7 +97,6 @@ class ProductController extends Controller
             $product->image = FileHelper::upload_file('admins', $request->image);
          }
         
-        
         $product->service_id =$request->service_id;
         $product->expertise_id =$request->expertise_id;
         $product->expertise_name = Expertise::find($request->expertise_id)->name;

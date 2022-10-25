@@ -111,13 +111,19 @@ public function login()
      */
     protected function respondWithToken($token)
     {
+        $user = auth('provider_api')->user();
+        $minutes = auth('provider_api')->factory()->getTTL() * 60;
+        $timestamp = now()->addMinute($minutes);
+        $expires_at = date('M d, Y H:i A', strtotime($timestamp));
         return response()->json([
-         'status' => true,
-         'message' => 'Login successful',
-         'access_token' => $token,
-         'token_type' => 'bearer',
-         'expires_in' => auth()->guard('provider_api')->factory()->getTTL() * 60
-     ]);
+            'status' => true,
+            'message' => 'Login successful',
+            'user' => $user ,
+            'type' => 'provider',
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_at' => $expires_at
+        ], 200);
     }
 
     public function register(Request $request)

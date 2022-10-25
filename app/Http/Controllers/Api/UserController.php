@@ -20,7 +20,7 @@ class UserController extends Controller
 {
    public function __construct() {
 
-        $this->middleware('assign.guard');
+      //  $this->middleware('assign.guard');
         $this->middleware('auth:user_api');
     }
    
