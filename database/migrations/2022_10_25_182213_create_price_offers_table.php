@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('price_offers', function (Blueprint $table) {
             $table->id();
-             $table->foreignId('user_order_id')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('product_order_id')->onDelete('cascade')->onUpdate('cascade');
-            $table->enum('status_order', ['rejected' , 'delivery' , 'wait'])->default('wait')->nullable();
+            $table->foreignId('provider_offer_id')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('product_offer_id')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('price_offer')->nullable();
+            $table->enum('status_offer', ['rejected' , 'accept' , 'wait'])->default('wait')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('price_offers');
     }
 };
