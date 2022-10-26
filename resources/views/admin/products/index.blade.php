@@ -46,7 +46,7 @@
                     <td>{{ $item->status }}</td>
                     <td>
                      @if ($item->image != null)
-                     <img src="{{ Storage::url('/'.$item->image) }}"
+                     <img src="{{ asset('uploadedimages/'.$item->image) }}"
                      style="width:40px;height:40px;" />
                      @else
                      <img src="{{ asset('assets/imgs/avatar.png') }}"
