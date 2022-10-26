@@ -56,9 +56,12 @@ Route::group(['middleware' => 'api'], function () {
 
     Route::post('/order/delivery/{id}', [OrderController::class ,'delivery'])->name('order.delivery'); 
 
-    Route::post('/order/reject/{id}', [OrderController::class ,'reject'])->name('order.reject'); 
+    Route::post('/order/reject/{id}', [OrderController::class ,'reject'])->name('order.reject')->middleware('auth:provider_api');
 
     Route::get('/provider/orders', [OrderController::class,'providerOrders'])->name('provider.orders')->middleware('auth:provider_api');
+
+    // Route::get('/provider/orders', [OrderController::class,'providerOrders'])->middleware('auth:provider_api');
+    Route::get('/user/orders', [OrderController::class,'userOrders'])->middleware('auth:user_api');
 
 });
 

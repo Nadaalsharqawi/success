@@ -21,8 +21,8 @@ class OrderController extends Controller
      */
     public function __construct() {
 
-        $this->middleware('assign.guard');
-         $this->middleware('auth:provider_api');
+        // $this->middleware('assign.guard');
+        //  $this->middleware('auth:provider_api');
     }
 
     /**
@@ -170,5 +170,17 @@ class OrderController extends Controller
             "data" => $orders
         ]);
     }
+
+     public function userOrders()
+     {  if(auth()->guard('user_api')->user()->type=='student'){
+        $orders = Order::where('user_id', auth()->guard('user_api')->user()->id)->get();
+        
+        return response()->json([
+            "status" => true,
+            "message" => " Order List for Students",
+            "data" => $orders
+        ]);
+    }
+     }
 
 }
