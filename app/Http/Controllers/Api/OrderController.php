@@ -179,7 +179,13 @@ class OrderController extends Controller
      */
 public function providerOrders()
 {
-    $orders = Order::where('provider_id', auth()->guard('provider_api')->user()->id)->get();
+
+    
+        $orders = Order::with(['product' => function ($query) {
+            $query->where('provider_id', auth()->guard('provider_api')->user()->id);
+        }])->get()->makeHidden(['product']);
+
+      // $orders = Order::where('provider_id', auth()->guard('provider_api')->user()->id)->get();
 
     return response()->json([
         "status" => true,
