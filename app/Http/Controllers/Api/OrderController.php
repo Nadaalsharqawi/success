@@ -22,7 +22,7 @@ class OrderController extends Controller
  public function __construct() {
 
         //$this->middleware('assign.guard');
-   $this->middleware('auth:provider_api' , ['except' => ['addOrder','userOrders']]);
+   $this->middleware('auth:provider_api' , ['except' => ['addOrder','userOrders','showRejects']]);
 }
 
     /**
@@ -200,4 +200,17 @@ public function providerOrders()
     }
      }
 
-}
+       public function showRejects()
+     {  
+        $rejects=Reject::all();
+        
+        return response()->json([
+            "status" => true,
+            "message" => " Rejects",
+            "data" => $rejects
+        ]);
+    }
+
+     }
+
+

@@ -67,6 +67,7 @@ Route::group(['middleware' => 'api'], function () {
 
     // Route::get('/provider/orders', [OrderController::class,'providerOrders'])->middleware('auth:provider_api');
     Route::get('/user/orders', [OrderController::class,'userOrders'])->middleware('auth:user_api');
+    Route::get('/showRejects', [OrderController::class,'showRejects']);
 
 });
 
