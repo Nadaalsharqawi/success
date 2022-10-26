@@ -181,9 +181,14 @@ public function providerOrders()
 {
 
     
-        $orders = Order::with(['product' => function ($query) {
-            $query->where('provider_id', auth()->guard('provider_api')->user()->id);
-        }])->get()->makeHidden(['product']);
+        // $orders = Order::with(['product' => function ($query) {
+        //     $query->where('provider_id', auth()->guard('provider_api')->user()->id);
+        // }])->get()->makeHidden(['product']);
+        
+        $orders =Order::whereHas('product', function ($query) {
+        $query->where('provider_id', auth()->guard('provider_api')->user()->id);
+        })->get();
+
 
       // $orders = Order::where('provider_id', auth()->guard('provider_api')->user()->id)->get();
 
