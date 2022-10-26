@@ -39,6 +39,8 @@ Route::group(['middleware' => 'api'], function () {
         Route::post('/register', [AuthController::class, 'register']);
         Route::get('/showProviders', [ UserController::class,'showProviders']);
         Route::get('/showHome', [ UserController::class,'showHome']);
+         Route::post('/search/product', [ UserController::class,'searchProduct']);
+
 
        
     });

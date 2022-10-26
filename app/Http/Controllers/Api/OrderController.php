@@ -190,7 +190,7 @@ public function providerOrders()
 
      public function userOrders()
      {  if(auth()->guard('user_api')->user()->type=='student'){
-        $orders = Order::where('user_id', auth()->guard('user_api')->user()->id)->get();
+        $orders = Order::where('user_order_id', auth()->guard('user_api')->user()->id)->get();
         
         return response()->json([
             "status" => true,

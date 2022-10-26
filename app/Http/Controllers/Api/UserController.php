@@ -10,6 +10,7 @@ use App\Http\Middleware\AssignGuard ;
 use App\Models\User;
 use Validator;
 use App\Models\Provider;
+use App\Models\Product;
 use App\Models\Ads;
 use App\Models\Service;
 use Illuminate\Support\Facades\Auth;
@@ -70,5 +71,18 @@ class UserController extends Controller
 
 
      }
+      public function searchProduct(Request $request)
+        {
+            
+            $product=Product::where('service_name', 'like' ,"%{$request->service}%")->get();
+
+            return response()->json([
+                "status" => true,
+                "message" => "success",
+                "data" => $product 
+                ]);
+
+            }
+     
 }
 
