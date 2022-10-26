@@ -17,8 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('reason');
             $table->longText('description');
-            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('provider_id')->constrained('providers')->onDelete('cascade')->onUpdate('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

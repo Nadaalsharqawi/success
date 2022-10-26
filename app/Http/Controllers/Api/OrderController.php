@@ -19,11 +19,11 @@ class OrderController extends Controller
      *
      * @return void
      */
-    public function __construct() {
+ public function __construct() {
 
-        // $this->middleware('assign.guard');
-        //  $this->middleware('auth:provider_api');
-    }
+        //$this->middleware('assign.guard');
+   $this->middleware('auth:provider_api' , ['except' => ['addOrder','userOrders']]);
+}
 
     /**
      * Display a listing of the resource.
@@ -41,61 +41,64 @@ class OrderController extends Controller
         ]);
     }
 
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function showOrder($id)
+     {
+        $order = Order::find($id);
+        if($order)
+        {
+            $product =Product::find($order->product_order_id) ;
+            $user = User::find($order->user_order_id);
+            return response()->json([
+                "status" => true,
+                "message" => " Show Order",
+                "data" => $order ,
+                "product" => $product ,
+                "user" => $user 
+            ]);
+        }
+    }
+
 
 
     public function addOrder($id)
     {
 
     	$order = new Order();
-        $user_id = Auth::guard('user_api')->user()->id;
+        $user_order_id = Auth::guard('user_api')->user()->id;
         $product = Product::find($id);
-        $user = User::find($user_id);
-        $order->provider_name = $product->provider_name;
-        $order->provider_id = $product->provider_id;
-        $order->name_ar = $product->name_ar;
-        $order->name_en = $product->name_en;
-        $order->pages_number = $product->pages_number;
-        $order->description = $product->description;
-        $order->price = $product->price;
-        $order->old_price = $product->old_price;
-        $order->status_order = $product->status;
-        $order->delivery_date = $product->delivery_date;
-        $order->publish_date = $product->publish_date;
-        $order->status = $product->status;
-        $order->university = $product->university;
-        $order->year = $product->year;
-        $order->image = $product->image;
-        
-        $order->service_name =$product->service_name;
-        $order->expertise_name =$product->expertise_name;
-        $order->user()->associate($user_id);
-        $order->user_name = $user->name ;
-        $order->user_phone = $user->user_phone ;
-        $order->save();
+        if($product){
 
-        
+            $order->product()->associate($id);
+            $order->user()->associate($user_order_id);
+            $order->save();
 
 
-        return response()->json([
-          "status" => true,
-          "message" => "Order created successfully.",
-          "data" => $order
-      ]);
+            return response()->json([
+              "status" => true,
+              "message" => "Order created successfully.",
+              "data" => $order
+          ]);
+        }
     }
-
 
      /**
      *  delivery the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function delivery($id)
-    {
+     public function delivery($id)
+     {
       $order = Order::find($id);
 
-       if( $order) {
+      if( $order) {
         $order->status_order = 'delivery' ;
-       return response()->json([
+        $order->save();
+        return response()->json([
           "status" => true,
           "message" => "Order has been delivered successfully.",
           "data" => $order
@@ -108,68 +111,82 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function reject(Request $request , $id)
-    {
-         $order = Order::find($id);
-          if( $order) {
+     public function reject($id)
+     {
+       $order = Order::find($id);
+       if( $order) {
         $order->status_order = 'rejected' ;
 
-        $validator = Validator::make(
-            $request->all(),
-            [       'reason' => 'required',
-                    'description' => 'required|string|max:255',
-                    'order_id' => 'exists:orders,id',
-                    'provider_id' => 'exists:providers,id',
-            ]
-        );
- 
-            
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Invalid Inputs',
-                    'error' => $validator->errors()
-                ], 400);
-            }
-
-            $reject = new Reject();
-            $reject->reason = $request->reason;
-            $reject->description = $request->description;
-            $reject->order_id = $id;
-            $reject->provider_id = auth()->guard('provider_api')->user()->id;
-    
-            $reject->save();
-
- 
-     
-         
-
         return response()->json([
-          "status" => true,
-          "message" => "Order has been rejected",
-          "data" => [
-            "orders"=>  $order ,
-            "reject"=> $reject
-            ]
-      ]);
+            "status" => true,
+            "message" => "Order has been rejected",
+            "data"=>  $order ,
+
+        ]);
     }
+
+
+}
+
+
+
+  /**
+     *  reject the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+  public function rejectReason(Request $request , $id)
+  {
+   $order = Order::find($id);
+   if( $order) {
+
+    $validator = Validator::make(
+        $request->all(),
+        [  
+          'reason' => 'string|max:255',
+          'description' => 'string|max:255',
+
+      ]
+  );
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Invalid Inputs',
+            'error' => $validator->errors()
+        ], 400);
     }
+
+    $reason = $request->reason;
+    $description = $request->description;
+
+    return response()->json([
+        "status" => true,
+        "message" => "The reasons of order reject",
+        "reason"=>  $reason ,
+        "description"=> $description
+
+    ]);
+}
+
+
+}
+
 
 /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-     public function providerOrders()
-     {
-        $orders = Order::where('provider_id', auth()->guard('provider_api')->user()->id)->get();
-        
-        return response()->json([
-            "status" => true,
-            "message" => " Order List for provider",
-            "data" => $orders
-        ]);
-    }
+public function providerOrders()
+{
+    $orders = Order::where('provider_id', auth()->guard('provider_api')->user()->id)->get();
+
+    return response()->json([
+        "status" => true,
+        "message" => " Order List for provider",
+        "data" => $orders
+    ]);
+}
 
      public function userOrders()
      {  if(auth()->guard('user_api')->user()->type=='student'){

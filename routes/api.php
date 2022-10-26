@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\VerificationController;
 use App\Http\Controllers\Api\VerificationProviderController;
 use App\Http\Controllers\Api\ExpertiseController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\PriceOfferController;
 
 
 /*
@@ -58,12 +59,25 @@ Route::group(['middleware' => 'api'], function () {
 
     Route::post('/order/reject/{id}', [OrderController::class ,'reject'])->name('order.reject')->middleware('auth:provider_api');
 
-    Route::get('/provider/orders', [OrderController::class,'providerOrders'])->name('provider.orders')->middleware('auth:provider_api');
+    Route::post('reject/reason/order/{id}', [OrderController::class ,'rejectReason'])->name('reject.reason.order');
+
+    Route::get('/provider/orders', [OrderController::class,'providerOrders'])->name('provider.orders');
 
     // Route::get('/provider/orders', [OrderController::class,'providerOrders'])->middleware('auth:provider_api');
     Route::get('/user/orders', [OrderController::class,'userOrders'])->middleware('auth:user_api');
 
 });
+
+Route::get('show/order/{id}', [OrderController::class ,'showOrder'])->name('show.order'); 
+
+ Route::post('/price/offer/{id}', [PriceOfferController::class ,'addPriceOffer'])->name('price.offer')->middleware('auth:provider_api'); 
+ Route::post('/offer/reject/{id}', [PriceOfferController::class ,'reject'])->name('offer.reject'); 
+
+ Route::post('offer/accept/{id}', [PriceOfferController::class ,'accept'])->name('offer.accept'); 
+
+ Route::post('reject/reason/{id}', [PriceOfferController::class ,'rejectReason'])->name('reject.reason');
+
+ Route::get('show/offer/{id}', [PriceOfferController::class ,'showOffer'])->name('show.offer'); 
 
 Route::group(['prefix' => 'admin','middleware' => ['assign.guard:providerServices','jwt.auth']],function ()
 {

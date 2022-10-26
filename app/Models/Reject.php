@@ -11,15 +11,5 @@ class Reject extends Model
     use HasFactory;
 
     protected $fillable = ['reason', 'description', 'order_id','provider_id'];
-
-      public function providers(): BelongsTo
-    {
-        return $this->belongsTo(Provider::class,'provider_id');
-    }
-
-      public function orders(): BelongsTo
-    {
-        return $this->belongsTo(Order::class,'order_id');
-    }
   
 }
