@@ -20,7 +20,7 @@ class ExpertiseController extends Controller
     {
        
         $expertise = Expertise::all();
-        return view('admin.expertise.index', compact('expertise'));
+        return view('admin.expertises.index', compact('expertise'));
 
     }
 
@@ -33,7 +33,7 @@ class ExpertiseController extends Controller
     {
           
           
-          return view('admin.expertise.insert');
+          return view('admin.expertises.insert');
 
     }
 
@@ -76,7 +76,7 @@ class ExpertiseController extends Controller
     {
         $expertise=Expertise::findOrFail($id);
         // $expertise = Expertise::show($id);
-        return view('admin.expertise.edit',compact('expertise'));
+        return view('admin.expertises.edit',compact('expertise'));
 
     }
 

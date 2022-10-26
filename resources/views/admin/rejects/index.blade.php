@@ -27,6 +27,7 @@
                                 <th>#</th>
                                 <th>{{ trans('admin.reason') }}</th>
                                 <th>{{ trans('admin.description') }}</th>
+                                <th>{{ trans('admin.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
