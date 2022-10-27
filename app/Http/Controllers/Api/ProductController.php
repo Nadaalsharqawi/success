@@ -98,7 +98,9 @@ class ProductController extends Controller
         $product->university = $request->university;
          $product->year = $request->year;
          if ($request->image) {
-            $product->image = FileHelper::upload_file('admins', $request->image);
+           // $product->image = FileHelper::upload_file('admins', $request->image);
+            $product->image = time().'.'.$request->image->getClientOriginalExtension();
+             $request->image->move(public_path('/uploadedimages'),$product->image );
          }
         
         $product->service_id =$request->service_id;

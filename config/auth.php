@@ -112,7 +112,7 @@ return [
         'providers' => [
             'provider' => 'providers',
             'table' => 'password_resets',
-            'expire' => 90000000000,
+            'expire' => 9000000000,
             'throttle' => 60,
         ],
     ],

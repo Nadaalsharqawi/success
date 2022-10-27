@@ -23,7 +23,7 @@ class PriceOfferController extends Controller
  public function __construct() {
 
        // $this->middleware('assign.guard');
- 	$this->middleware('auth:user_api' , ['except' => ['addPriceOffer']]);
+ 	$this->middleware('auth:user_api' , ['except' => ['addPriceOffer' , 'providerOffers']]);
  }
 
     /**
@@ -41,6 +41,45 @@ class PriceOfferController extends Controller
     		"data" => $offers
     	]);
     }
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function userOffers()
+    {
+        
+        $offers = PriceOffer::whereHas('product', function ($query) {
+        $query->where('user_id', auth()->guard('user_api')->user()->id);
+        })->get();
+
+        return response()->json([
+            "status" => true,
+            "message" => "Offer Prices List",
+            "data" => $offers
+        ]);
+    }
+
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function providerOffers()
+    {
+        
+      $provider_offers = PriceOffer::where('provider_offer_id', auth()->guard('provider_api')->user()->id)->get();
+        
+
+        return response()->json([
+            "status" => true,
+            "message" => "Offer Prices List",
+            "data" => $provider_offers
+        ]);
+    }
+
 
      /**
      * Display a listing of the resource.
@@ -65,12 +104,23 @@ class PriceOfferController extends Controller
     }
 
     public function addPriceOffer(Request $request ,$id)
-    {
+    {   
 
-    	$price_offer = new PriceOffer();
-    	$provide_offer_id = Auth::guard('provider_api')->user()->id;
+
+         $provide_offer_id = Auth::guard('provider_api')->user()->id;
+         $offerss = PriceOffer::where('provider_offer_id' , $provide_offer_id)->where('product_offer_id' , $id)->first();
+         if ($offerss) {
+              return response()->json([
+            "status" => false,
+            "message" => " you can not add PriceOffer again ",
+            "provider_id" => $provide_offer_id
+        ]);
+
+         }
+
+    	$price_offer = new PriceOffer();   	
     	$product = Product::find($id);
-    	if($product){
+    	if(($product) && (!$product->price) && (!$offerss)){
     	$provider = Provider::find($provide_offer_id);
     	$price_offer->price_offer = $request->price_offer ;     
     	$price_offer->provider()->associate($provide_offer_id);
@@ -86,6 +136,16 @@ class PriceOfferController extends Controller
     		"data" => $price_offer
     	]);
     }
+
+    else
+    {
+        return response()->json([
+            "status" => false,
+            "message" => "PriceOffer can not be added ",
+            "data" => $price_offer
+        ]);
+    }
+
 }
 
 

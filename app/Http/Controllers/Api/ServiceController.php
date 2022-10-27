@@ -71,7 +71,11 @@ class ServiceController extends Controller
           
          $service = new Service();
          $service->name = $request->name;
-         $service->logo = FileHelper::upload_file('admins', $request->logo);
+          if ($request->logo) {
+           // $product->image = FileHelper::upload_file('admins', $request->image);
+            $service->logo = time().'.'.$request->logo->getClientOriginalExtension();
+             $request->logo->move(public_path('/uploadedimages'),$service->logo );
+         }
          $service->countries()->attach($request->countryId);
          $service->save();
 

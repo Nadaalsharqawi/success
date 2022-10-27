@@ -80,6 +80,17 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Service::class);
     }
+
+
+    /**
+     * Get the priceOffers associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function priceOffers()
+    {
+        return $this->hasMany(PriceOffer::class);
+    }
      /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
