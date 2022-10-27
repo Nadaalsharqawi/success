@@ -10,6 +10,6 @@ class Reject extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['reason', 'description', 'order_id','provider_id'];
+    protected $fillable = ['reason', 'description'];
   
 }

@@ -16,7 +16,11 @@ class Product extends Model
 {
     use HasFactory,SoftDeletes;
 
-    protected $fillable = ['name_ar', 'name_en', 'description','expertise_id'];
+    protected $fillable = 
+    ['name_ar', 'name_en','service_id' , 'user_id','provider_id','status', 'status_order', 'image','provider_name',
+        'service_name', 'expertise_name', 'pages_number','description','price', 'old_price',
+         'delivery_date','publish_date', 'university', 'year','user_name','user_phone'];
+         
     protected $hidden = ['name_ar', 'name_en', 'created_at', 'updated_at', 'deleted_at'];
     protected $date = ['deleted_at'];
     protected $appends = ['name'];

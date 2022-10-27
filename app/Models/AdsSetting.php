@@ -14,7 +14,7 @@ class AdsSetting extends Model
 {
     use HasFactory;
 
-     protected $fillable = ['country_id','duration_status','date_publication','duration'];
+     protected $fillable = ['country_id','duration_status','date_publication','duration','price'];
 
     public function countries(): BelongsTo
     {

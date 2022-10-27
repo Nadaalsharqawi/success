@@ -13,8 +13,6 @@ class Expertise extends Model
     use HasFactory,SoftDeletes;
 
     protected $fillable = ['name_ar', 'name_en'];
-    protected $hidden = ['name_ar', 'name_en', 'created_at', 'updated_at', 'deleted_at'];
-    protected $date = ['deleted_at'];
     protected $appends = ['name'];
     
     public function getNameAttribute()

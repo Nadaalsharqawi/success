@@ -13,7 +13,7 @@ class Country extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name_ar', 'name_en', 'code', 'short_code', 'status', 'logo','setting_id'];
+    protected $fillable = ['name_ar', 'name_en','short_code', 'status', 'logo','setting_id'];
     protected $hidden = ['name_ar', 'name_en', 'created_at', 'updated_at', 'deleted_at'];
     protected $date = ['deleted_at'];
     protected $appends = ['name'];

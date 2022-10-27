@@ -21,16 +21,27 @@ class Provider extends Authenticatable implements JWTSubject ,MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'name_place',
+        'location',
+        'show_phone',
+        'show_whatsapp',
         'password',
         'phone',
+        'type',
         'address',
         'facebook',
         'instagram',
         'whatsapp',
         'snap_chat',
         'provider_id' ,
+        'country_id',
         'servce_id' ,
         'expertise_id' ,
+        'lang',
+        'is_active' ,
+        'membership_id' ,
+        'email_verified_at' ,
+        'admin_approve'
     ];
       /**
      * The attributes that should be cast.
