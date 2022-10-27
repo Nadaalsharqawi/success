@@ -5,7 +5,7 @@
 @section('content')
     {!! Form::open(['method'=>'post' , 'route'=>'expertises.store']) !!}
     @method('POST')
-    @include('admin.expertise.inputs')
+    @include('admin.expertises.inputs')
     {!! Form::close() !!}
 
 @endsection
