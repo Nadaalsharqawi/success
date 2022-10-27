@@ -164,7 +164,9 @@ public function login()
             $validator->validated(),
             ['password' => bcrypt($request->password)]
         ));
-
+          $user->country_id =$request->countryId ;
+           $user->service_id =$request->serviceId ;
+           $user->save();
         return response()->json([
             'status' => true,
             'message' => 'Provider successfully registered',

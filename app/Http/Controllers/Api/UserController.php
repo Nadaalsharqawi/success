@@ -10,7 +10,6 @@ use App\Http\Middleware\AssignGuard ;
 use App\Models\User;
 use Validator;
 use App\Models\Provider;
-use App\Models\Membership;
 use App\Models\Product;
 use App\Models\Ads;
 use App\Models\Service;
@@ -23,7 +22,7 @@ class UserController extends Controller
    public function __construct() {
 
       //  $this->middleware('assign.guard');
-        $this->middleware('auth:user_api' , ['except' => ['addOrder' ,'']]);
+        $this->middleware('auth:user_api' , ['except' => ['addOrder' ,'destroy']]);
     }
    
      public function showProviders()
@@ -84,25 +83,6 @@ class UserController extends Controller
                 ]);
 
             }
-
-              public function showCurrentMembership()
-        {
-            $user=User::find(auth()->guard('user_api')->user()->id);
-            $membership=$user->membership;
-
-
-              // $product=User::where('id',auth()->guard('user_api')->user()->id)
-              // ->select('membership_id')->get();
-
-
-            return response()->json([
-                "status" => true,
-                "message" => "success",
-                "data" => $membership 
-                ]);
-
-            }
-            
      
 }
 
