@@ -17,7 +17,7 @@ class ExpertiseController extends Controller
       public function __construct() {
 
         $this->middleware('assign.guard');
-        $this->middleware('auth:provider_api');
+        //$this->middleware('auth:provider_api');
     }
    
      public function showExpertises()
