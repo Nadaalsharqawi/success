@@ -23,7 +23,7 @@ class UserController extends Controller
    public function __construct() {
 
       //  $this->middleware('assign.guard');
-        $this->middleware('auth:user_api');
+        $this->middleware('auth:user_api' , ['except' => ['addOrder' ,'']]);
     }
    
      public function showProviders()
