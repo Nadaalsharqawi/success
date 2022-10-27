@@ -81,6 +81,10 @@ Route::get('show/order/{id}', [OrderController::class ,'showOrder'])->name('show
  Route::post('reject/reason/{id}', [PriceOfferController::class ,'rejectReason'])->name('reject.reason');
 
  Route::get('show/offer/{id}', [PriceOfferController::class ,'showOffer'])->name('show.offer'); 
+ Route::get('user/offers', [PriceOfferController::class ,'userOffers'])->name('show.offers');
+
+Route::get('provider/offers', [PriceOfferController::class ,'providerOffers'])->name('provider.offers'); 
+
 
 Route::group(['prefix' => 'admin','middleware' => ['assign.guard:providerServices','jwt.auth']],function ()
 {
