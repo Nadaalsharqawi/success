@@ -11,6 +11,7 @@ use App\Models\Reject;
 use App\Models\Provider;
 use Validator;
 use Auth ;
+use Illuminate\Support\Collection;
 
 class PriceOfferController extends Controller
 {
@@ -72,11 +73,20 @@ class PriceOfferController extends Controller
         
       $provider_offers = PriceOffer::where('provider_offer_id', auth()->guard('provider_api')->user()->id)->get();
         
+         $collection = new Collection;
 
+    foreach($provider_offers as $item){
+        $provider = Provider::find($item->provider_offer_id);
+        $product = Product::find($item->product_offer_id);
+        $collection->push((object)[
+            'product' =>$product,
+            'provider' => $provider
+        ]);
+    }
         return response()->json([
             "status" => true,
             "message" => "Offer Prices List",
-            "data" => $provider_offers
+            "data" => $collection->all()
         ]);
     }
 

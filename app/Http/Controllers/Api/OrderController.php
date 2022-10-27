@@ -24,8 +24,8 @@ class OrderController extends Controller
  public function __construct() {
 
         //$this->middleware('assign.guard');
-   $this->middleware('auth:provider_api' , ['except' => ['addOrder','userOrders','showRejects']]);
-}
+     $this->middleware('auth:provider_api' , ['except' => ['addOrder','userOrders','showRejects']]);
+ }
 
     /**
      * Display a listing of the resource.
@@ -115,20 +115,20 @@ class OrderController extends Controller
      */
      public function reject($id)
      {
-       $order = Order::find($id);
-       if( $order) {
-        $order->status_order = 'rejected' ;
+         $order = Order::find($id);
+         if( $order) {
+            $order->status_order = 'rejected' ;
 
-        return response()->json([
-            "status" => true,
-            "message" => "Order has been rejected",
-            "data"=>  $order ,
+            return response()->json([
+                "status" => true,
+                "message" => "Order has been rejected",
+                "data"=>  $order ,
 
-        ]);
+            ]);
+        }
+
+
     }
-
-
-}
 
 
 
@@ -139,36 +139,36 @@ class OrderController extends Controller
      */
   public function rejectReason(Request $request , $id)
   {
-   $order = Order::find($id);
-   if( $order) {
+     $order = Order::find($id);
+     if( $order) {
 
-    $validator = Validator::make(
-        $request->all(),
-        [  
-          'reason' => 'string|max:255',
-          'description' => 'string|max:255',
+        $validator = Validator::make(
+            $request->all(),
+            [  
+              'reason' => 'string|max:255',
+              'description' => 'string|max:255',
 
-      ]
-  );
-    if ($validator->fails()) {
+          ]
+      );
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid Inputs',
+                'error' => $validator->errors()
+            ], 400);
+        }
+
+        $reason = $request->reason;
+        $description = $request->description;
+
         return response()->json([
-            'status' => false,
-            'message' => 'Invalid Inputs',
-            'error' => $validator->errors()
-        ], 400);
+            "status" => true,
+            "message" => "The reasons of order reject",
+            "reason"=>  $reason ,
+            "description"=> $description
+
+        ]);
     }
-
-    $reason = $request->reason;
-    $description = $request->description;
-
-    return response()->json([
-        "status" => true,
-        "message" => "The reasons of order reject",
-        "reason"=>  $reason ,
-        "description"=> $description
-
-    ]);
-}
 
 
 }
@@ -186,20 +186,20 @@ public function providerOrders()
         // $orders = Order::with(['product' => function ($query) {
         //     $query->where('provider_id', auth()->guard('provider_api')->user()->id);
         // }])->get()->makeHidden(['product']);
-        
-        $orders =Order::whereHas('product', function ($query) {
+    
+    $orders =Order::whereHas('product', function ($query) {
         $query->where('provider_id', auth()->guard('provider_api')->user()->id);
-        })->get();
-$collection = new Collection;
+    })->get();
+    $collection = new Collection;
 
-   foreach($orders as $item){
-            $product = Product::find($item->product_order_id);
-             $user = User::find($item->user_order_id);
-            $collection->push((object)[
-        'product' =>$product,
-        'user' => $user
-    ]);
-        }
+    foreach($orders as $item){
+        $product = Product::find($item->product_order_id);
+        $user = User::find($item->user_order_id);
+        $collection->push((object)[
+            'product' =>$product,
+            'user' => $user
+        ]);
+    }
       // $orders = Order::where('provider_id', auth()->guard('provider_api')->user()->id)->get();
 
     return response()->json([
@@ -209,29 +209,29 @@ $collection = new Collection;
     ]);
 }
 
-     public function userOrders()
-     {  if(auth()->guard('user_api')->user()->type=='student'){
-        $orders = Order::where('user_order_id', auth()->guard('user_api')->user()->id)->get();
-        
-        return response()->json([
-            "status" => true,
-            "message" => " Order List for Students",
-            "data" => $orders
-        ]);
-    }
-     }
+public function userOrders()
+{  if(auth()->guard('user_api')->user()->type=='student'){
+    $orders = Order::where('user_order_id', auth()->guard('user_api')->user()->id)->get();
+    
+    return response()->json([
+        "status" => true,
+        "message" => " Order List for Students",
+        "data" => $orders
+    ]);
+}
+}
 
-       public function showRejects()
-     {  
-        $rejects=Reject::all();
-        
-        return response()->json([
-            "status" => true,
-            "message" => " Rejects",
-            "data" => $rejects
-        ]);
-    }
+public function showRejects()
+{  
+    $rejects=Reject::all();
+    
+    return response()->json([
+        "status" => true,
+        "message" => " Rejects",
+        "data" => $rejects
+    ]);
+}
 
-     }
+}
 
 
