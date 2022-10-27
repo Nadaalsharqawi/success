@@ -17,8 +17,8 @@ class AdsController extends Controller
 {
     public function __construct() {
 
-        $this->middleware('assign.guard');
-        $this->middleware('auth:provider_api');
+        $this->middleware('assign.guard' , ['except' => ['createAds']]);
+       // $this->middleware('auth:provider_api');
     }
 
 

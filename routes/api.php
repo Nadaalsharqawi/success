@@ -114,7 +114,7 @@ Route::group(['prefix' => 'admin','middleware' => ['assign.guard:providerService
 Route::prefix('provider')->controller(AdsController::class)->group(function () {
     Route::get('/showAds','showAds');
     Route::get('/showOffer','showOffer');
-    Route::post('/createAds','createAds');
+    Route::post('/createAds','createAds')->middleware('auth:provider_api');
     Route::get('/adsAndOffers','adsAndOffers');
 });
 
