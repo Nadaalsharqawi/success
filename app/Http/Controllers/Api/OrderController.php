@@ -10,6 +10,8 @@ use App\Models\Order;
 use App\Models\Reject;
 use Validator;
 use Auth ;
+use Illuminate\Support\Collection;
+
 class OrderController extends Controller
 {
 
@@ -188,14 +190,22 @@ public function providerOrders()
         $orders =Order::whereHas('product', function ($query) {
         $query->where('provider_id', auth()->guard('provider_api')->user()->id);
         })->get();
+$collection = new Collection;
 
-
+   foreach($orders as $item){
+            $product = Product::find($item->product_order_id);
+             $user = User::find($item->user_order_id);
+            $collection->push((object)[
+        'product' =>$product,
+        'user' => $user
+    ]);
+        }
       // $orders = Order::where('provider_id', auth()->guard('provider_api')->user()->id)->get();
 
     return response()->json([
         "status" => true,
         "message" => " Order List for provider",
-        "data" => $orders
+        "data" => $collection->all()
     ]);
 }
 

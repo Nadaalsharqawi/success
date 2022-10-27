@@ -35,7 +35,7 @@ class Provider extends Authenticatable implements JWTSubject ,MustVerifyEmail
         'snap_chat',
         'provider_id' ,
         'country_id',
-        'servce_id' ,
+        'service_id' ,
         'expertise_id' ,
         'lang',
         'is_active' ,
