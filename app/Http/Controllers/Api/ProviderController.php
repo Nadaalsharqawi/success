@@ -54,6 +54,7 @@ class ProviderController extends Controller
     return response()->json([
         "success" => true,
         "message" => "Provider found.",
+        "provider" => $provider ,
         "services" => $services ,
         "offers" => $offers ,
         "ads" => $ads ,
